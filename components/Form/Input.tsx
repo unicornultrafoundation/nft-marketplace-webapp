@@ -12,7 +12,8 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean
   success?: boolean
   errorMessage?: string
-  register: UseFormRegisterReturn
+  register?: UseFormRegisterReturn
+  placeholder?: string
 }
 
 export default function Input({
@@ -27,6 +28,7 @@ export default function Input({
   errorMessage,
   className,
   register,
+  placeholder,
   ...rest
 }: Props) {
   const baseClass = 'bg-surface-soft outline-none placeholder:text-tertiary focus-visible:ring-[0.5px] w-full'
@@ -77,6 +79,7 @@ export default function Input({
       }
       <input
         className={classNames(baseClass, scaleClass, colorClass, className)}
+        placeholder={placeholder}
         {...register}
         {...rest}
       />

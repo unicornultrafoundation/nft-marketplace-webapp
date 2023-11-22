@@ -21,7 +21,7 @@ const tab: CustomFlowbiteTheme['tab'] = {
         underline: {
           base: 'text-sm',
           active: {
-            on: 'text-primary border-b-2 border-primary',
+            on: 'text-primary border-b-2 border-primary font-medium',
             off: 'text-secondary bg-transparent'
           }
         },
@@ -31,8 +31,41 @@ const tab: CustomFlowbiteTheme['tab'] = {
   tabpanel: ''
 }
 
+const accordion: CustomFlowbiteTheme['accordion'] = {
+  root: {
+    base: '',
+    flush: {
+      off: '',
+      on: 'hover:bg-transparent'
+    }
+  },
+  content: {
+    base: "px-2 last:rounded-b-lg  first:rounded-t-lg"
+  },
+  title: {
+    arrow: {
+      base: 'h-6 w-6 shrink-0',
+      open: {
+        off: '',
+        on: 'rotate-180'
+      }
+    },
+    base: "flex w-full items-center justify-between text-left font-medium px-5 py-4",
+    flush: {
+      off: "",
+      on: ""
+    },
+    heading: "",
+    open: {
+      off: "",
+      on: ""
+    }
+  }
+}
+
 const appTheme: CustomFlowbiteTheme = {
-  tab
+  tab,
+  accordion
 }
 
 export default appTheme

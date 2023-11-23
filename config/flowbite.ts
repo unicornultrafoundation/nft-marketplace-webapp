@@ -41,9 +41,25 @@ const table: CustomFlowbiteTheme['table'] = {
   }
 }
 
+const modal: CustomFlowbiteTheme['modal'] = {
+  root: {
+    "show": {
+      "on": "flex bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ",
+    },
+  },
+  content: {
+    "base": "relative w-[300px] p-4  overflow-hidden",
+    "inner": "relative rounded-lg bg-white shadow dark:bg-gray-700 flex flex-col h-screen overflow-hidden "
+  },
+  body: {
+    "base": "p-6 flex-1 bg-black overflow-hidden ",
+  },
+}
+
 const appTheme: CustomFlowbiteTheme = {
   tab,
-  table
+  table,
+  modal
 }
 
 export default appTheme

@@ -1,19 +1,18 @@
-import { Modal, ModalProps } from 'flowbite-react'
+import { useState } from 'react'
+
+import { Modal } from 'flowbite-react'
 import Text from '@/components/Text'
 import defaultAvatar from "@/assets/images/default-avatar.png";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 
-interface Props extends ModalProps {
-
-}
-
-export default function ProfileModal({ show, onClose, onOpen, modalPlacement }: Props) {
+export default function ProfileModal() {
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <div className="">
       <div className="hidden desktop:block tablet:block">
-        <button onClick={onOpen}>
+        <button onClick={() => setOpenModal(true)}>
           <Image
             className="cursor-pointer"
             src={defaultAvatar}
@@ -25,11 +24,11 @@ export default function ProfileModal({ show, onClose, onOpen, modalPlacement }: 
       </div>
       <div className="block mobile:hidden text-secondary">
 
-        <button onClick={onOpen}>
-          <Icon color="secondary" name="burger" width={20} height={20}/>
+        <button onClick={() => setOpenModal(true)}>
+          <Icon color="secondary" name="burger" width={20} height={20} />
         </button>
       </div>
-      <Modal dismissible position={modalPlacement} show={show}>
+      <Modal dismissible position="top-right" show={openModal}>
         <Modal.Body>
           <div className="">
             <div className="flex justify-between items-center py-4">
@@ -45,7 +44,7 @@ export default function ProfileModal({ show, onClose, onOpen, modalPlacement }: 
                   <Text className="text-secondary">View profile</Text>
                 </div>
               </div>
-              <button className="text-white" onClick={onClose}>
+              <button className="text-white" onClick={() => setOpenModal(false)}>
                 <Icon name="arrowRight" width={20} height={20} />
               </button>
             </div>
@@ -65,7 +64,7 @@ export default function ProfileModal({ show, onClose, onOpen, modalPlacement }: 
               </a>
             </div>
             <div className=" py-4">
-              <div className="border-b"/>
+              <div className="border-b" />
             </div>
             <div className=" py-4 w-full">
               <a href={"/#"}>

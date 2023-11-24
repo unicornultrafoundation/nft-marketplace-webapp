@@ -11,7 +11,6 @@ import ProfileModal from "@/components/Modal/ProfileModal";
 export const HEADER_HEIGHT = 88
 export default function MainHeader() {
   const [searchString, setSearchString] = useState('')
-  const [openModal, setOpenModal] = useState(false);
   const navs = [
     {
       label: 'Explore',
@@ -37,19 +36,19 @@ export default function MainHeader() {
         <div className="flex items-center gap-6">
           <div className="hidden desktop:block tablet:block">
             <Link href="/">
-              <Image height={28} src={brandingSvg} alt="u2u-brand"/>
+              <Image height={28} src={brandingSvg} alt="u2u-brand" />
             </Link>
           </div>
           <div className="block mobile:hidden">
             <Link href="/">
-              <Icon name="u2u-logo-mobile" width={28} height={28}/>
+              <Icon name="u2u-logo-mobile" width={28} height={28} />
             </Link>
           </div>
 
 
           <div className="hidden desktop:block tablet:block">
             <Input
-              containerclassName="hidden tablet:block desktop:w-[420px] tablet:w-[280px]"
+              containerClass="hidden tablet:block desktop:w-[420px] tablet:w-[280px]"
               value={searchString}
               placeholder="Type for collections, NFTs etc"
               onChange={event => setSearchString(event.target.value)}
@@ -59,7 +58,7 @@ export default function MainHeader() {
             <Input
               value={searchString}
               onChange={event => setSearchString(event.target.value)}
-              prependIcon={<Icon name="search" width={28} height={28}/>}
+              prependIcon={<Icon name="search" width={28} height={28} />}
             />
           </div>
 
@@ -100,10 +99,7 @@ export default function MainHeader() {
 
         <div className=" tablet:flex gap-4 items-center">
           {/*<ConnectWalletButton mode="link">*/}
-          <ProfileModal show={openModal}
-                        modalPlacement={"top-right"}
-                        onOpen={() => setOpenModal(true)}
-                        onClose={() => setOpenModal(false)}/>
+          <ProfileModal />
           {/*</ConnectWalletButton>*/}
         </div>
       </div>

@@ -1,14 +1,13 @@
 import React from "react";
 import BgImage from "@/assets/images/user-detail-bg.png";
 import Avatar from "@/assets/images/user-avatar.png";
-import DropdownIcon from "@/assets/svg/dropdown-icon";
-import FilterIcon from "@/assets/svg/filter-icon";
-import TabCategory from "@/app/(app)/userDetail/components/tabCategory/TabCategory";
+import TabCategory from "./components/tabCategory/TabCategory";
 import Card from "@/assets/images/card-image.png";
-import CardNFT from "@/app/(app)/userDetail/components/cardNFT/CardNFT";
 import ItemImage from "@/assets/images/item-image.png";
-import Profile from "@/app/(app)/userDetail/components/profile/Profile";
-import TableExplore from "@/app/(app)/userDetail/components/tableExplore/TableExplore";
+import Profile from "./components/profile/Profile";
+import TableExplore from "./components/tableExplore/TableExplore";
+import NFTCard from '@/components/NFT/NFTCard'
+import Icon from '@/components/Icon'
 
 interface NftCards {
   name: string;
@@ -245,19 +244,19 @@ export default function ProfilePage() {
       />
 
       <div className="mt-[100px]">
-        <div className="pt-[40px] px-[80px] pb-[40px] gap-[32px] flex gap-[32px] flex-col">
+        <div className="pt-[40px] px-[80px] pb-[40px] flex gap-[32px] flex-col">
           <TabCategory />
 
           <div className="flex items-center justify-between">
             <div className="bg-surface-soft pt-[16px] pb-[16px] pl-[24px] pr-[24px] flex gap-2 rounded-2xl">
               <span>Filters</span>
-              <FilterIcon width={24} height={24} />
+              <Icon name="slider" width={24} height={24} />
             </div>
             <div className="bg-surface-soft pt-[16px] pb-[16px] pl-[24px] pr-[24px] flex gap-2 rounded-2xl items-center">
               <span>Price: </span>
               <span>Low to High</span>
               <button className="bg-surface-medium p-[2px] flex rounded-xl ">
-                <DropdownIcon width={24} height={24} />
+                <Icon name="chevronDown" width={24} height={24} />
               </button>
             </div>
           </div>
@@ -269,30 +268,30 @@ export default function ProfilePage() {
               <div className="flex justify-between px-[16px] py-[20px] rounded-2xl hover:bg-surface-soft">
                 <span>Blockchain</span>
                 <button>
-                  <DropdownIcon width={24} height={24} />
+                  <Icon name="chevronDown" width={24} height={24} />
                 </button>
               </div>
 
               <div className="flex justify-between px-[16px] py-[20px] rounded-2xl hover:bg-surface-soft">
                 <span>Status</span>
-                <DropdownIcon width={24} height={24} />
+                <Icon name="chevronDown" width={24} height={24} />
               </div>
               <div className="flex justify-between px-[16px] py-[20px] rounded-2xl hover:bg-surface-soft">
                 <span>Price</span>
                 <button>
-                  <DropdownIcon width={24} height={24} />
+                  <Icon name="chevronDown" width={24} height={24} />
                 </button>
               </div>
               <div className="flex justify-between px-[16px] py-[20px] rounded-2xl hover:bg-surface-soft">
                 <span>Category</span>
                 <button>
-                  <DropdownIcon width={24} height={24} />
+                  <Icon name="chevronDown" width={24} height={24} />
                 </button>
               </div>
               <div className="flex justify-between px-[16px] py-[20px] rounded-2xl hover:bg-surface-soft">
                 <span>Collections</span>
                 <button>
-                  <DropdownIcon width={24} height={24} />
+                  <Icon name="chevronDown" width={24} height={24} />
                 </button>
               </div>
             </div>
@@ -300,7 +299,7 @@ export default function ProfilePage() {
 
           <div className="grid grid-cols-4 gap-[12px] w-full">
             {listData.map((option, index) => (
-              <CardNFT
+              <NFTCard
                 key={index}
                 name={option.name}
                 amount={option.amount}
@@ -314,7 +313,7 @@ export default function ProfilePage() {
         </div>
       </div>
       <div className="mt-[100px]">
-        <div className="pt-[40px] px-[80px] pb-[40px] gap-[32px] flex gap-[32px] flex-col">
+        <div className="pt-[40px] px-[80px] pb-[40px] gap-[32px] flex flex-col">
           <TabCategory />
 
           <div
@@ -322,7 +321,7 @@ export default function ProfilePage() {
             className="w-full overflow-x-auto"
           >
             <div className="overflow-hidden min-w-max">
-              <div className="grid grid-cols-5 font-medium text-xs text-tertiary uppercase py-[16px] uppercase">
+              <div className="grid grid-cols-5 font-medium text-xs text-tertiary py-[16px] uppercase">
                 <div>Item</div>
                 <div>Type</div>
                 <div>Price</div>

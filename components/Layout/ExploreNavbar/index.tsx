@@ -64,6 +64,7 @@ export default function ExploreSectionNavbar() {
         <Tabs.Group onActiveTabChange={handleChangeTab} style="default" ref={tabsRef}>
           {tabs.map(tab => (
             <Tabs.Item
+              active={pathname.includes(tab.href)}
               key={tab.href}
               title={tab.label}
             />

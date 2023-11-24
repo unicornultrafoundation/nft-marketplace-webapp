@@ -14,6 +14,14 @@ import PlusCircleIcon from './PlusCircle'
 import SliderIcon from './Slider'
 import VerifiedIcon from './Verified'
 import ArrowLeftIcon from './ArrowLeft'
+import BoxIcon from '@/components/Icon/Box'
+import DollarSignIcon from '@/components/Icon/DollarSign'
+import MoreVerticalIcon from '@/components/Icon/MoreVertical'
+import RepeatIcon from '@/components/Icon/Repeat'
+import TrendingUpIcon from '@/components/Icon/TrendingUp'
+import SearchIcon from "@/components/Icon/Search";
+import U2NftMobileIcon from "@/components/Icon/U2NftMobile";
+import U2NftMobileLogo from "@/components/Icon/U2NftMobile";
 
 type Color = keyof typeof defaultColors & keyof typeof colors
 
@@ -57,6 +65,20 @@ export default function Icon({ name, width, height, ...rest }: IconProps & {
         return <SliderIcon width={iconW} height={iconH} {...rest} />
       case 'verified':
         return <VerifiedIcon width={iconW} height={iconH} />
+      case 'box':
+        return <BoxIcon width={iconW} height={iconH} {...rest} />
+      case 'dollarSign':
+        return <DollarSignIcon width={iconW} height={iconH} {...rest} />
+      case 'moreVertical':
+        return <MoreVerticalIcon width={iconW} height={iconH} {...rest} />
+      case 'repeat':
+        return <RepeatIcon width={iconW} height={iconH} {...rest} />
+      case 'trendingUp':
+        return <TrendingUpIcon width={iconW} height={iconH} {...rest} />
+      case 'search':
+        return <SearchIcon width={iconW} height={iconH} {...rest} />
+      case 'u2u-logo-mobile':
+        return <U2NftMobileLogo width={iconW} height={iconH} {...rest} />
       default:
         return null
     }

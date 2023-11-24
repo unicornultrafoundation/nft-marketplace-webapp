@@ -18,7 +18,7 @@ export const useCreateCollection = () => {
   })
 
   const onCreateCollection = async (type: AssetType, args: any[], toastId?: Id) => {
-    const { hash } = await (type === 'ERC721' ? write721({ args }) : write1155({ args }))
+    // const { hash } = type === 'ERC721' ? await write721({ args }) : await write1155({ args })
     if (type === 'ERC721') {
       return write721({ args })
     }
@@ -30,13 +30,8 @@ export const useCreateCollection = () => {
 
 export const useUpdateCollection = () => {
   const api = useMarketplaceApi()
-  const { credentials } = useAuthStore()
-  const bearerToken = credentials?.accessToken
 
-  const onUpdateCollection = useCallback((params: APIParams.UpdateCollection) => {
-    if (!bearerToken) return
-    return api.updateCollection(params)
-  }, [bearerToken])
+  const onUpdateCollection = (params: APIParams.UpdateCollection) => api.updateCollection(params)
 
   return { onUpdateCollection }
 }

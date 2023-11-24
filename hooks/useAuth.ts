@@ -18,7 +18,7 @@ export const useAuth = () => {
       date,
       publicKey: address,
       signature: message,
-      signer: address
+      signer: address.toLocaleLowerCase()
     })
     setCredentials(credentials)
 

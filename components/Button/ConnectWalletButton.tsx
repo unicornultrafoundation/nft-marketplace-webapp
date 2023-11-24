@@ -9,12 +9,12 @@ import SignConnectMessageModal from '@/components/Modal/SignConnectMessageModal'
 import useAuthStore from '@/store/auth/store'
 import { useRouter } from 'next/navigation'
 
-interface Props {
+interface Props extends ButtonProps{
   children?: React.ReactNode
   mode?: 'link' | 'modal'
 }
 
-export default function ConnectWalletButton({ mode = 'modal', children }: Props) {
+export default function ConnectWalletButton({ className, mode = 'modal', children, ...rest }: Props) {
   const router = useRouter()
   const { isConnected } = useAccount()
   const [showWalletConnect, setShowWalletConnect] = useState(false)
@@ -37,7 +37,7 @@ export default function ConnectWalletButton({ mode = 'modal', children }: Props)
 
   return (
     <>
-      <Button type="button" onClick={handleConnectWallet}>
+      <Button type="button" onClick={handleConnectWallet} className={className} {...rest}>
         Connect Wallet
       </Button>
 

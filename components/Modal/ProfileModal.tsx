@@ -12,7 +12,6 @@ interface Props extends ModalProps{
 
 export default function ProfileModal({ show, onClose }: Props) {
   return (
-
     <Modal dismissible position="top-right" show={show}>
       <Modal.Body>
         <div className="">

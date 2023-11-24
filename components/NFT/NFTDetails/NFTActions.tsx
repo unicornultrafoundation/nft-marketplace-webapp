@@ -1,18 +1,40 @@
 import Button from '@/components/Button'
 import Icon from '@/components/Icon'
 import { APIResponse } from '@/services/api/types'
-import { useMarket } from '@/hooks/useMarket'
-import { useEffect } from 'react'
+import { useMarket, useMarketStatus } from '@/hooks/useMarket'
+import { useEffect, useState } from 'react'
+import ConnectWalletButton from '@/components/Button/ConnectWalletButton'
+import SellNFTModal from '@/components/Modal/SellNFTModal'
 
 export default function NFTActions(nft: APIResponse.NFT) {
-  const { data } = useMarket(nft)
+  const { isOwner, isOnSale } = useMarketStatus(nft)
+  const [showSellModal, setShowSellModal] = useState(false)
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
+  const handleSellNFT = () => {
+    setShowSellModal(true)
+  }
+
+  if (isOwner) {
+    return (
+      <ConnectWalletButton className="w-full">
+        {
+          isOnSale ? (
+            <Button>
+              Cancel listing
+            </Button>
+          ) : (
+            <Button className="mb-3 w-full" onClick={handleSellNFT}>
+              Put on sale
+            </Button>
+          )
+        }
+        <SellNFTModal nft={nft} show={showSellModal} onClose={() => setShowSellModal(false)} />
+      </ConnectWalletButton>
+    )
+  }
 
   return (
-    <div>
+    <ConnectWalletButton className="w-full">
       <div className="flex items-center gap-3 mb-3">
         <Button className="flex-1">
           Buy Now
@@ -24,6 +46,6 @@ export default function NFTActions(nft: APIResponse.NFT) {
       <Button className="w-full" variant="outlined">
         Place a bid
       </Button>
-    </div>
+    </ConnectWalletButton>
   )
 }

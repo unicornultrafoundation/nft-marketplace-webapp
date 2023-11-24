@@ -7,6 +7,7 @@ import Icon from '@/components/Icon'
 import { Dropdown } from 'flowbite-react'
 import ProfileModal from "@/components/Modal/ProfileModal";
 
+
 export const HEADER_HEIGHT = 88
 export default function MainHeader() {
   const [searchString, setSearchString] = useState('')

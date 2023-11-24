@@ -2,35 +2,39 @@ import React from "react";
 import VerifySticker from "@/assets/svg/verify-sticker";
 import Image from "next/image";
 import "./style.scss";
+import { APIResponse } from '@/services/api/types'
+import { useRouter } from 'next/navigation'
 
-interface Props {
-  name: string
-  amount: number
-  symbol: string
-  nftImg?: any
-  category: string
-  isVerify: boolean
-}
-
-export default function NFTCard({ name, amount, symbol, nftImg, category, isVerify }: Props) {
+export default function NFTCard({ name, id, creator, collection }: APIResponse.NFT) {
+  const router = useRouter()
 
   return (
     <div className="border rounded-2xl">
-      <div className="p-[8px] ">
-        <div className="card">
+      <div className="p-2">
+        <div className="card cursor-pointer" onClick={() => router.push(`/nft/${id}`)}>
           <div className="wrapper">
-            <Image src={nftImg} alt="card" className="cover-image" />
+            <Image
+              src={'https://flowbite.com/docs/images/carousel/carousel-3.svg'}
+              width={1}
+              height={1}
+              alt="card"
+              className="cover-image" />
           </div>
-          <Image src={nftImg} alt="" className="character" />
+          <Image
+            src={'https://flowbite.com/docs/images/carousel/carousel-3.svg'}
+            alt=""
+            className="character"
+            width={1}
+            height={1} />
         </div>
       </div>
       <div className=" flex flex-col gap-2 pt-1 pb-3 px-3">
         <div className="flex gap-2 text-secondary">
-          {isVerify && <VerifySticker width={24} height={24} />}
+          <VerifySticker width={24} height={24} />
           <span>{name}</span>
         </div>
-        <span className="text-primary font-medium">{category}</span>
-        <span>{amount} {symbol}</span>
+        <span className="text-primary font-medium">{collection.name}</span>
+        <span>0 U2U</span>
       </div>
     </div>
   )

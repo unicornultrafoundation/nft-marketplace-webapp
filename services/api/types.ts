@@ -9,6 +9,8 @@ interface Creator {
   username: string
 }
 
+type Status = 'PENDING' | 'SUCCESS' | 'FAILED'
+
 export namespace APIParams {
   export interface Connect {
     date: string
@@ -44,6 +46,10 @@ export namespace APIParams {
     txCreationHash: string,
     creatorId: string,
     traits?: Trait[]
+  }
+
+  export interface SearchNFT {
+
   }
 }
 
@@ -87,12 +93,28 @@ export namespace APIResponse {
     updatedAt: string
     metadata: null | Record<string, any> | any[]
     shortUrl: string | null
-    status: 'PENDING' | 'SUCCESS' | 'FAILED'
+    status: Status
     type: AssetType
     creators: Creator[]
   }
 
   export interface CreateNFT {
     tokenId: string
+  }
+
+  export interface NFT {
+    id: string
+    name: string
+    ipfsHash: string
+    createdAt: string
+    updatedAt: string
+    status: Status,
+    tokenUri: string,
+    txCreationHash: string,
+    creatorId: string,
+    collectionId: string,
+    creator: Creator,
+    collection: Collection,
+    traits: Trait[]
   }
 }

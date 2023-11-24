@@ -23,7 +23,7 @@ export default function Button({
   ...rest
 }: ButtonProps) {
   const baseClass = useMemo(() => {
-    return `focus:outline-none transition-all ${disabled ? 'cursor-not-allowed text-disabled' : 'cursor-pointer '}`
+    return `focus:outline-none transition-all whitespace-nowrap text-ellipsis ${disabled ? 'cursor-not-allowed text-disabled' : 'cursor-pointer'}`
   }, [disabled])
 
   const scaleClass = useMemo(() => {

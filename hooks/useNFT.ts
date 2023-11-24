@@ -23,22 +23,35 @@ export const useCreateNFT = (collection: Address, type: AssetType) => {
     if (!userId || !collection) return
 
     if (toastId) toast.update(toastId, { render: 'Uploading Image', type: 'info' })
-    const { fileHashes } = await api.uploadFile(params.image)
+    const { fileHashes, metadataHash } = await api.uploadFile(
+      params.image,
+      {
+        traits: [],
+        description: params.description
+      })
 
     if (toastId) toast.update(toastId, { render: 'Generating config', type: 'info' })
     const tokenId = await api.generateTokenId(collection)
 
     if (toastId) toast.update(toastId, { render: 'Sending Transaction', type: 'info' })
     const tokenURI = "ipfs://" + fileHashes[0]
+    const baseArgs: Record<string, any> =type === 'ERC1155'?{
+      tokenId,
+      tokenURI,
+      supply: params.amount,
+      creators: [{ account: address, value: 10000 }],
+      royalties: [],
+      signatures: ["0x"]
+    } : {
+      tokenId,
+      tokenURI,
+      creators: [{ account: address, value: 10000 }],
+      royalties: [],
+      signatures: ["0x"]
+    }
+    // if (type === 'ERC1155') baseArgs.supply = params.amount
     const args = [
-      {
-        tokenId,
-        tokenURI,
-        supply: 1,
-        creators: [{ account: address, value: 10000 }],
-        royalties: [],
-        signatures: ["0x"]
-      },
+      baseArgs,
       address,
       type === 'ERC1155' && params.amount
     ].filter(Boolean)
@@ -48,10 +61,11 @@ export const useCreateNFT = (collection: Address, type: AssetType) => {
     const createNFTParams = {
       id: tokenId,
       name: params.name,
-      ipfsHash: tokenId,
+      ipfsHash: metadataHash,
       tokenUri: tokenURI,
       collectionId: collection,
       txCreationHash: hash,
+      imageHash: fileHashes[0],
       creatorId: userId,
       traits: []
     } as APIParams.CreateNFT

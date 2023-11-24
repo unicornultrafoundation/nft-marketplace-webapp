@@ -16,16 +16,18 @@ export const useMarketplaceApi = () => {
 
       updateProfile: (params: APIParams.UpdateProfile) => marketplaceApi.post(API_ENDPOINTS.PROFILE, params, authHeader),
 
-      uploadFile: (file: Blob): Promise<APIResponse.UploadImage> => {
+      uploadFile: (file: Blob, metadata?: Record<string, any>): Promise<APIResponse.UploadImage> => {
         const form = new FormData();
         form.append("files", file, (file as any).name)
+        if (metadata) {
+          form.append('metadata', JSON.stringify(metadata))
+        }
         return marketplaceApi.post(API_ENDPOINTS.UPLOAD_IMAGE, form)
       },
 
       updateCollection: (params: APIParams.UpdateCollection) => marketplaceApi.post(API_ENDPOINTS.COLLECTIONS, params, authHeader),
-
       createNFT: (params: APIParams.CreateNFT): Promise<APIResponse.CreateNFT> => marketplaceApi.post(API_ENDPOINTS.NFT, params, authHeader),
-      fetchNFTs: (params: APIParams.SearchNFT): Promise<APIResponse.NFT[]> => marketplaceApi.post(API_ENDPOINTS.SEARCH_NFTS),
+      fetchNFTs: (params: APIParams.SearchNFT): Promise<APIResponse.SearchNFTResponse> => marketplaceApi.post(API_ENDPOINTS.SEARCH_NFTS, params),
 
       /** GET **/
       generateTokenId: async (collectionAddress: Address): Promise<string> => {

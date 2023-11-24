@@ -6,7 +6,7 @@ import Input from '@/components/Form/Input'
 import Textarea from '@/components/Form/Textarea'
 import Button from '@/components/Button'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NFTTypeSelection from '@/components/NFT/NFTTypeSelection'
 import {
   useCreateCollection,
@@ -20,8 +20,12 @@ import { toast } from 'react-toastify'
 import { AssetType } from '@/types'
 import ConnectWalletButton from '@/components/Button/ConnectWalletButton'
 import { useMarketplaceApi } from '@/hooks/useMarketplaceApi'
+import { useTransaction } from 'wagmi'
 
 export default function CreateNFTCollectionPage() {
+  const { data, isLoading } = useTransaction({
+    hash: '0x149d41ad58099ca171fbf74503e48f5a89d327c7b9c7fb234f85c76eab481019'
+  })
   const api = useMarketplaceApi()
   const creator = useAuthStore(state => state.profile?.id)
   const [type, setType] = useState<AssetType>()
@@ -56,6 +60,7 @@ export default function CreateNFTCollectionPage() {
       toast.update(toastId, { render: 'Sending transaction', type: 'info' })
 
       const tx = await onCreateCollection(type, args)
+      console.log('Creation hash', tx.hash)
       const res = await onUpdateCollection({
         name,
         symbol,
@@ -76,6 +81,10 @@ export default function CreateNFTCollectionPage() {
       console.error(e)
     }
   }
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   if (!type) {
     return (
@@ -135,7 +144,7 @@ export default function CreateNFTCollectionPage() {
             </div>
 
             {/* Button finish */}
-            <div className="justify-end flex">
+            <div className="justify-end">
               <ConnectWalletButton>
                 <Button type="submit" className="w-full tablet:w-auto desktop:w-auto">
                   Create collection

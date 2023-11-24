@@ -4,25 +4,29 @@ import { APIResponse } from '@/services/api/types'
 import Text from '@/components/Text'
 import Button from '@/components/Button'
 import { useMemo } from 'react'
+import NFTActions from '@/components/NFT/NFTDetails/NFTActions'
+import useAuthStore from '@/store/auth/store'
 
-export default function NFTDetailsHeader({ name, collection, sellInfo, creator }: APIResponse.NFT) {
+export default function NFTDetailsHeader(nft: APIResponse.NFT) {
+  const userId = useAuthStore(state => state.credentials?.userId)
+  const { name, collection, sellInfo, creator, owners } = nft
   const type = collection.type
 
-  const isOnSale = useMemo(() => {
+  const isOwner = useMemo(() => userId === owners[0].userId, [userId, owners])
 
+  const isOnSale = useMemo(() => {
     const saleData = type === 'ERC721' ? sellInfo?.marketEvent721S : sellInfo?.marketEvent1155S
     if (!saleData) return false
-    return saleData[0].event === 'AskNew'
+    return saleData[0]?.event === 'AskNew'
   }, [sellInfo])
 
   const price = useMemo(() => {
-
     const saleData = type === 'ERC721' ? sellInfo?.marketEvent721S : sellInfo?.marketEvent1155S
     if (!saleData) return 0
-    if (saleData[0].event !== 'AskNew') {
+    if (saleData[0]?.event !== 'AskNew') {
       return 0
     }
-    return saleData[0].price
+    return saleData[0]?.price
   }, [sellInfo])
 
   return (
@@ -71,7 +75,7 @@ export default function NFTDetailsHeader({ name, collection, sellInfo, creator }
         <div className="bg-surface-soft shadow rounded-2xl p-3">
           <div className="p-4">
             <Text className="text-secondary mb-2 font-semibold" variant="body-16">
-              Price
+              Price {isOwner.toString()}
             </Text>
             {
               isOnSale ? (
@@ -87,19 +91,7 @@ export default function NFTDetailsHeader({ name, collection, sellInfo, creator }
             }
           </div>
 
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <Button className="flex-1">
-                Buy Now
-              </Button>
-              <Button className="w-12 !min-w-0 !p-2" disabled>
-                <Icon name="shoppingBag" width={16} height={16} />
-              </Button>
-            </div>
-            <Button className="w-full" variant="outlined">
-              Place a bid
-            </Button>
-          </div>
+          <NFTActions {...nft} />
         </div>
       </div>
     </div>

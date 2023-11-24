@@ -31,7 +31,7 @@ export default function CreateNFTButton({ disabled, collection, assetType }: Pro
   }
 
   return (
-    <ConnectWalletButton disabled={disabled}>
+    <ConnectWalletButton>
       <Button
         disabled={disabled}
         onClick={handleSubmit}

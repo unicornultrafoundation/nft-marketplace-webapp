@@ -4,16 +4,18 @@ import { Address } from 'wagmi'
 
 interface User {
   avatar: null | string
-  email: string
-  publicKey: string
+  email: string | null
+  id: string
+  publicKey: Address
   username: string
 }
 
 type Status = 'PENDING' | 'SUCCESS' | 'FAILED'
+type MarketEventType = 'AskNew' | 'AskCancel' | 'Trade' | 'AcceptBid' | 'Bid' | 'CancelBid'
 
 interface MarketEvent {
   id: string,
-  event: 'AskNew' | 'AskCancel' | 'Trade' | 'AcceptBid' | 'Bid' | 'CancelBid',
+  event: MarketEventType
   nftId: {
     id: string
   },
@@ -23,6 +25,11 @@ interface MarketEvent {
 }
 
 export namespace APIParams {
+  interface PaginationParams {
+    page: number
+    limit: number
+  }
+
   export interface Connect {
     date: string
     publicKey: Address
@@ -52,6 +59,7 @@ export namespace APIParams {
     id: Address
     name: string,
     ipfsHash: string,
+    imageHash: string,
     tokenUri: string,
     collectionId: string,
     txCreationHash: string,
@@ -59,12 +67,23 @@ export namespace APIParams {
     traits?: Trait[]
   }
 
-  export interface SearchNFT {
-
+  export interface SearchNFT extends PaginationParams {
+    traits?: { trait_type: string, value: any }[]
+    collectionAddress?: Address,
+    creatorAddress?: Address,
+    priceMax?: number,
+    priceMin?: number,
+    sellStatus?: MarketEventType
   }
 }
 
 export namespace APIResponse {
+  interface PaginationResponse {
+    page: number
+    limit: number
+    total: number
+  }
+
   export interface Connect {
     accessToken: string
     accessTokenExpire: number // 1700117015092
@@ -89,7 +108,8 @@ export namespace APIResponse {
   }
 
   export interface UploadImage {
-    fileHashes: string[]
+    fileHashes: string[],
+    metadataHash: string
   }
 
   export interface Collection {
@@ -97,7 +117,7 @@ export namespace APIResponse {
     txCreationHash: string
     name: string | null
     symbol: string
-    address: string
+    address: Address
     description?: string | null
     categoryId: number | null
     createdAt: string
@@ -124,13 +144,29 @@ export namespace APIResponse {
     txCreationHash: string,
     creatorId: string,
     collectionId: string,
-    creator: User,
-    owners: User[],
+    creator: {
+      avatar: null | string
+      email: string | null
+      id: string
+      publicKey: Address
+      username: string
+    },
+    owners: {
+      nftId: string
+      quantity: number
+      userId: string
+      user: Omit<User, 'id'>
+    }[],
     collection: Collection,
     traits: Trait[]
     sellInfo?: {
       marketEvent1155S: MarketEvent[],
       marketEvent721S: MarketEvent[]
     }
+  }
+
+  export interface SearchNFTResponse {
+    data: NFT[]
+    paging: PaginationResponse
   }
 }

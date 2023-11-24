@@ -5,34 +5,36 @@ import Input from "@/components/Form/Input";
 import Textarea from "@/components/Form/Textarea";
 import Text from "@/components/Text";
 import ImageUploader from '@/components/Form/ImageUploader'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
-import Select from '@/components/Form/Select'
 import NFTTypeSelection from '@/components/NFT/NFTTypeSelection'
 import Icon from '@/components/Icon'
 import { AssetType } from '@/types'
-import { useAppCommonData } from '@/hooks/useAppData'
-import { contracts } from '@/config/contracts'
 import CreateNFTButton from './components/CreateNFTButton'
 import { CreateNFTForm } from '@/types/form'
 import { classNames } from '@/utils/string'
+import useAuthStore from '@/store/auth/store'
+import useSWR from 'swr'
+import { useMarketplaceApi } from '@/hooks/useMarketplaceApi'
 
 export default function CreateNftPage() {
-  const { myCollections } = useAppCommonData()
+  const api = useMarketplaceApi()
+  const userId = useAuthStore(state => state.credentials?.userId)
+  const { data, error, isLoading } = useSWR(
+    !!userId ? 'true' : null,
+    () => api.fetchCollectionsByUser(userId as string),
+    { refreshInterval: 3600 * 1000 }
+  )
   const methods = useForm<CreateNFTForm>()
   const collection = methods.watch('collection')
   const [type, setType] = useState<AssetType>()
 
   const collectionOptions = useMemo(() => {
-    const collections = myCollections.map(c => ({
+    const collections = data?.map(c => ({
       label: c.name ?? c.id, value: c.address, type: c.type
-    }))
-
-    return [
-      { label: `U2U`, type, value: type === 'ERC721' ? contracts.erc721.address : contracts.erc1155.address },
-      ...collections
-    ]
-  }, [myCollections, type])
+    })) || []
+    return collections.filter(c => c.type === type)
+  }, [data, type])
 
   const resetForm = () => {
     methods.reset()
@@ -81,12 +83,15 @@ export default function CreateNftPage() {
                   control={methods.control}
                   rules={{ required: true }}
                   render={({ field: { onChange, value } }) => (
-                    <div className="flex items-center gap-2 w-full max-h-56 overflow-y-auto flex-wrap">
+                    <div className="flex items-center gap-3 w-full max-h-56 overflow-y-auto flex-wrap">
                       {
                         collectionOptions.map(c => (
                           <div
                             key={c.value}
-                            onClick={() => onChange(c.value)}
+                            onClick={() => {
+                              console.log(c.value)
+                              onChange(c.value)
+                            }}
                             className={classNames(
                               'w-36 overflow-ellipsis flex flex-col justify-center items-center gap-2 cursor-pointer rounded-2xl p-8',
                               'hover:border-2 hover:border-primary hover:bg-white hover:text-primary',

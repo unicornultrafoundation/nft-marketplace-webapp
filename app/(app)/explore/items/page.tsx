@@ -10,7 +10,10 @@ import Filters from '@/components/Filters'
 export default function ExploreNFTsPage() {
   const [showFilters, setShowFilters] = useState(false)
   const api = useMarketplaceApi()
-  const { data: items, error, isLoading } = useSWR('collections', api.fetchNFTs)
+  const { data, error, isLoading } = useSWR('collections', () => api.fetchNFTs({
+    page: 1,
+    limit: 20
+  }))
 
   return (
     <div className="w-full flex gap-12">
@@ -23,7 +26,7 @@ export default function ExploreNFTsPage() {
           )
         }>
           {
-            items?.map(item => (
+            data?.data.map(item => (
               <NFTCard {...item} />
             ))
           }

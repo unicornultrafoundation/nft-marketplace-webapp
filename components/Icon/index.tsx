@@ -14,6 +14,8 @@ import PlusCircleIcon from './PlusCircle'
 import SliderIcon from './Slider'
 import VerifiedIcon from './Verified'
 import ArrowLeftIcon from './ArrowLeft'
+import SearchIcon from "@/components/Icon/Search";
+import U2NftMobileLogo from "@/components/Icon/U2NftMobile";
 import BoxIcon from './Box'
 import DollarSignIcon from './DollarSign'
 import MoreVerticalIcon from './MoreVertical'

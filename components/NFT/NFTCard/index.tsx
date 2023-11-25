@@ -11,23 +11,26 @@ export default function NFTCard({ name, id, creator, collection }: APIResponse.N
   return (
     <div className="border rounded-2xl">
       <div className="p-2">
-        <div className="card cursor-pointer" onClick={() => router.push(`/nft/${id}`)}>
+        <div
+          className="card"
+          onClick={() => router.push(`/item/${id}`)}>
           <div className="wrapper">
             <Image
               src={'https://flowbite.com/docs/images/carousel/carousel-3.svg'}
               width={1}
               height={1}
-              alt="card"
-              className="cover-image" />
+              alt="image"
+              className="cover-image rounded-2xl" />
           </div>
           <Image
             src={'https://flowbite.com/docs/images/carousel/carousel-3.svg'}
-            alt=""
-            className="character"
+            alt="image"
+            className="character rounded-2xl"
             width={1}
             height={1} />
         </div>
       </div>
+
       <div className=" flex flex-col gap-2 pt-1 pb-3 px-3">
         <div className="flex gap-2 text-secondary">
           <VerifySticker width={24} height={24} />

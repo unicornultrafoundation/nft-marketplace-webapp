@@ -8,6 +8,6 @@ export const API_ENDPOINTS = {
   USER_COLLECTIONS: '/collection/user',
   UPLOAD_IMAGE: '/common/upload-ipfs',
   TOKEN_ID: '/nft/tokenId',
-  CREATE_NFT: '/nft',
+  NFT: '/nft',
   SEARCH_NFTS: '/nft/search'
 }

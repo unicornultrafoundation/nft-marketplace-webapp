@@ -24,9 +24,8 @@ export const useMarketplaceApi = () => {
 
       updateCollection: (params: APIParams.UpdateCollection) => marketplaceApi.post(API_ENDPOINTS.COLLECTIONS, params, authHeader),
 
-      createNFT: (params: APIParams.CreateNFT): Promise<APIResponse.CreateNFT> => marketplaceApi.post(API_ENDPOINTS.CREATE_NFT, params, authHeader),
+      createNFT: (params: APIParams.CreateNFT): Promise<APIResponse.CreateNFT> => marketplaceApi.post(API_ENDPOINTS.NFT, params, authHeader),
       fetchNFTs: (params: APIParams.SearchNFT): Promise<APIResponse.NFT[]> => marketplaceApi.post(API_ENDPOINTS.SEARCH_NFTS),
-
 
       /** GET **/
       generateTokenId: async (collectionAddress: Address): Promise<string> => {
@@ -40,6 +39,8 @@ export const useMarketplaceApi = () => {
         const data: any = await marketplaceApi.get(API_ENDPOINTS.USER_COLLECTIONS + `/${userId}`)
         return (data && data[0]) ? data[0]['nftCollection'].map((item: any) => item.collection) as APIResponse.Collection[] : []
       },
+
+      fetchNFTById: (id: string): Promise<APIResponse.NFT> => marketplaceApi.get(API_ENDPOINTS.NFT + `/${id}`),
 
       viewProfile: (wallet: Address): Promise<APIResponse.Profile> => marketplaceApi.get(API_ENDPOINTS.PROFILE + `/${wallet}`)
     }

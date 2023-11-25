@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios'
 import { AssetType, Trait } from '@/types'
 import { Address } from 'wagmi'
 
-interface Creator {
+interface User {
   avatar: null | string
   email: string
   publicKey: string
@@ -10,6 +10,17 @@ interface Creator {
 }
 
 type Status = 'PENDING' | 'SUCCESS' | 'FAILED'
+
+interface MarketEvent {
+  id: string,
+  event: 'AskNew' | 'AskCancel' | 'Trade' | 'AcceptBid' | 'Bid' | 'CancelBid',
+  nftId: {
+    id: string
+  },
+  price: string // Big Number
+  to: string
+  from: string
+}
 
 export namespace APIParams {
   export interface Connect {
@@ -95,7 +106,7 @@ export namespace APIResponse {
     shortUrl: string | null
     status: Status
     type: AssetType
-    creators: Creator[]
+    creators: User[]
   }
 
   export interface CreateNFT {
@@ -113,8 +124,13 @@ export namespace APIResponse {
     txCreationHash: string,
     creatorId: string,
     collectionId: string,
-    creator: Creator,
+    creator: User,
+    owners: User[],
     collection: Collection,
     traits: Trait[]
+    sellInfo?: {
+      marketEvent1155S: MarketEvent[],
+      marketEvent721S: MarketEvent[]
+    }
   }
 }

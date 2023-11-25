@@ -14,8 +14,6 @@ import PlusCircleIcon from './PlusCircle'
 import SliderIcon from './Slider'
 import VerifiedIcon from './Verified'
 import ArrowLeftIcon from './ArrowLeft'
-import SearchIcon from "@/components/Icon/Search";
-import U2NftMobileLogo from "@/components/Icon/U2NftMobile";
 import BoxIcon from './Box'
 import DollarSignIcon from './DollarSign'
 import MoreVerticalIcon from './MoreVertical'
@@ -24,6 +22,8 @@ import TrendingUpIcon from './TrendingUp'
 import ShareIcon from './Share'
 import RefreshIcon from './Refresh'
 import ShoppingBagIcon from './ShoppingBag'
+import SearchIcon from "./Search";
+import U2NftMobileIcon from "./U2NftMobile";
 
 type Color = keyof typeof defaultColors & keyof typeof colors
 
@@ -86,7 +86,7 @@ export default function Icon({ name, width, height, ...rest }: IconProps & {
       case 'search':
         return <SearchIcon width={iconW} height={iconH} {...rest} />
       case 'u2u-logo-mobile':
-        return <U2NftMobileLogo width={iconW} height={iconH} {...rest} />
+        return <U2NftMobileIcon width={iconW} height={iconH} {...rest} />
       default:
         return null
     }

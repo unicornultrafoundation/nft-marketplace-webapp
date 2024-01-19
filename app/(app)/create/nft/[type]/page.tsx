@@ -208,7 +208,7 @@ export default function CreateNftPage() {
           collectionId: getValues('collection')
         })
         if (existed) setError('name', { type: 'custom', message: 'NFT name already existed' })
-        else clearErrors('name')
+        else if (errors.name) clearErrors('name')
       }
     } finally {
       setValidating(false)

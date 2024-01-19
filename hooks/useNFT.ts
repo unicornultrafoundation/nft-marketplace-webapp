@@ -17,6 +17,7 @@ export const useCreateNFT = (type: AssetType) => {
   const onCreateNFT = async (params: Record<string, any>) => {
     if (!userId || !type || !address) return
     const { collection, description, image, traits, royalties, name, amount, animation_url } = params
+    const royaltiesBigInt = BigInt(Number(Number(royalties).toFixed(2)) * 100);
 
     const { id, u2uId } = await api.generateTokenId(collection)
 
@@ -39,7 +40,7 @@ export const useCreateNFT = (type: AssetType) => {
         tokenId: BigInt(BigInt(u2uId).toString()),
         tokenURI: metadataHash,
         creators: [{ account: address, value: BigInt(10000) }],
-        royalties: [{ account: address, value: BigInt(Number(royalties) * 100) }],
+        royalties: [{ account: address, value: royaltiesBigInt }],
         signatures: ["0x"] as Address[]
       }
 
@@ -57,7 +58,7 @@ export const useCreateNFT = (type: AssetType) => {
         tokenURI: metadataHash,
         supply: amount,
         creators: [{ account: address, value: BigInt(10000) }],
-        royalties: [{ account: address, value: BigInt(Number(royalties) * 100) }],
+        royalties: [{ account: address, value: royaltiesBigInt }],
         signatures: ["0x"] as Address[]
       }
 

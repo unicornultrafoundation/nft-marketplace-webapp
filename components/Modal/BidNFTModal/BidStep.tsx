@@ -130,6 +130,8 @@ export default function BidStep({ onSuccess, onError, nft, marketData }: Props) 
           <div>
             <Text className="text-secondary font-semibold mb-1">Quantity</Text>
             <Input
+              maxLength={3}
+              size={3}
               register={register('quantity', formRules.quantity)}
               appendIcon={
                 <Text className="w-56 overflow-ellipsis whitespace-nowrap text-right">

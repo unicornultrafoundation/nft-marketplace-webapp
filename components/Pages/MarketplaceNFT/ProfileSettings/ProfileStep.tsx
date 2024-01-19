@@ -8,7 +8,7 @@ import {useForm} from 'react-hook-form';
 import useAuthStore from '@/store/auth/store'
 import {toast} from 'react-toastify'
 import {useAuth} from '@/hooks/useAuth'
-import {emailRegex, urlRegex} from '@/utils/regex';
+import {emailRegex, nameRegex, urlRegex} from '@/utils/regex';
 import FormValidationMessages from '@/components/Form/ValidationMessages';
 import {FormState} from '@/types'
 
@@ -54,18 +54,15 @@ export default function ProfileStep() {
     }
   }
 
-  const handleInputChange = (event: any) => {
-    const value = event.target.value;
-    const formattedValue = value.replace(/\s+/g, '-');
-    setValue('shortLink', formattedValue)
-  };
-
-
   const formRules = {
     username: {
       required: 'Please input username',
-      minLength: {value: 6, message: 'Username must have at least 6 characters'},
-      maxLength: {value: 25, message: 'Username cannot exceed 25 characters'}
+      pattern: { value: nameRegex, message: 'Invalid username' }
+
+    },
+    shortLink: {
+      required: 'Please input short link',
+      pattern: { value: nameRegex, message: 'Invalid short link' }
     }
   }
 
@@ -87,10 +84,8 @@ export default function ProfileStep() {
              <Input
                 prependIcon="@"
                 placeholder="shorlink"
-                register={register('shortLink')}
-                onChange={(event) => {
-                  handleInputChange(event);
-                }}
+                error={!!errors.username}
+                register={register('shortLink',formRules.shortLink)}
              />
              <Text className="text-tertiary mt-1" variant="body-12">
                Your profile will be available on https://marketplace.uniultra.xyz/user/[shortLink]

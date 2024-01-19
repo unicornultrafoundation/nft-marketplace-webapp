@@ -24,7 +24,10 @@ export default function MainHeader() {
         <div className="flex items-center gap-6">
           <div className="hidden desktop:block tablet:block">
             <Link href="/" className="w-fit">
-              <Image className="h-10 object-contain desktop:w-[248px] tablet:w-fit" height={100} src={brandingSvg} alt="u2u-brand" />
+              <Image className="h-10 object-contain desktop:w-[248px] tablet:w-fit"
+                     height={100}
+                     src={brandingSvg}
+                     alt="u2u-brand" />
             </Link>
           </div>
           <div className="block tablet:hidden">
@@ -43,14 +46,19 @@ export default function MainHeader() {
                   <Dropdown
                     key={index}
                     activator={
-                      <Text className="font-semibold text-secondary hover:text-primary transition-colors" variant="body-16">
+                      <Text className="font-semibold text-secondary hover:text-primary transition-colors"
+                            variant="body-16">
                         {nav.label}
                       </Text>
                     }
                     dropdown={
                       <div className="flex flex-col">
                         {nav.items.map((item, i) => (
-                          <Link className="py-1.5" key={i} href={item.href ?? '/'} target="_blank">{item.label}</Link>
+                          <Link
+                            className="py-1.5"
+                            key={i}
+                            href={item.href ?? '/'}
+                            target={item.external ? '_blank' : undefined}>{item.label}</Link>
                         ))}
                       </div>
                     }

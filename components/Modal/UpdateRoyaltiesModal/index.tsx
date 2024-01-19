@@ -52,31 +52,35 @@ export default function UpdateRoyaltiesModal({ onClose, show, collection }: Prop
     validate: (value: FormState['royalties']) => {
       const isMissingAddress = value.some(item => !isAddress(item?.account))
       if (isMissingAddress) return 'Invalid wallet address'
-
+  
       const isMissingValue = value.some(item => isNaN(item.value) || Number(item.value) <= 0)
       if (isMissingValue) return 'Royalty value must be greater than Zero'
-
+  
       const isTwoDecimal = value.every(item => {
         let numStr = item.value.replace(',', '.');
-
+  
         let decimalIndex = numStr.indexOf('.');
         if (decimalIndex === -1) {
-            return true;
+          return true;
         }
-
+  
         let decimalPart = numStr.substring(decimalIndex + 1);
-
+  
         return decimalPart.length <= 2;
-    });
-
-    if (!isTwoDecimal) return 'Royalty value only allow 2 decimal';
-
+      });
+  
+      if (!isTwoDecimal) return 'Royalty value only allow 2 decimal';
+  
+      // Check for duplicate accounts
+      const uniqueAccounts = new Set(value.map(item => item?.account))
+      if (uniqueAccounts.size !== value.length) return 'Duplicate account found'
+  
       const totalRoyalties = value.reduce((accumulator, current) => {
         return Number(current.value) + Number(accumulator)
       }, 0)
-
+  
       if (totalRoyalties * 100 > MAX_ROYALTIES) return `Total royalties cannot exceed ${MAX_ROYALTIES / 100}%`
-
+  
       return true
     }
   }

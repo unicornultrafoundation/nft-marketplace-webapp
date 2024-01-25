@@ -11,35 +11,27 @@ import { useWriteRoundContract } from '@/hooks/useRoundContract';
 import { toast } from 'react-toastify';
 import { useAccount, useBalance, useContractReads } from 'wagmi';
 import { useLaunchpadApi } from '@/hooks/useLaunchpadApi';
+import useLaunchpadStore from '@/store/launchpad/store';
 
 interface Props {
-  round: Round;
   eligibleStatus: boolean;
-  collection: Collection;
   setLoading: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
-  isSpecial: boolean;
 }
 
 export default function RoundActionMinting({
-  round,
   eligibleStatus,
-  collection,
   setLoading,
   loading,
-  isSpecial,
 }: Props) {
+  const { round, collection, isSpecial } = useLaunchpadStore((state) => state);
   const api = useLaunchpadApi();
-  const [addressState, setAddressState] = useState('');
   const { address } = useAccount();
 
-  useEffect(() => {
-    if (address) setAddressState(address);
-  }, [address]);
   const { data: balanceInfo } = useBalance({
-    address: addressState as `0x${string}`,
+    address: address,
     watch: true,
-    enabled: !!addressState,
+    enabled: !!address,
   });
   const { onBuyNFT, onBuyNFTCustomized } = useWriteRoundContract(
     round,
@@ -64,7 +56,7 @@ export default function RoundActionMinting({
       },
     ],
     watch: true,
-    enabled: !!addressState,
+    enabled: !!address,
     select: ([amountBought, roundInfo]) => [
       formatUnits(String(amountBought?.result), 0),
       roundInfo?.result,
@@ -91,7 +83,7 @@ export default function RoundActionMinting({
   };
 
   const handleInputAmount = (value: number) => {
-    if (!addressState) {
+    if (!address) {
       toast.warning('Please connect your wallet first');
       return;
     }
@@ -141,6 +133,37 @@ export default function RoundActionMinting({
       setLoading(false);
     }
   };
+
+  const disableMint = useMemo(() => {
+    if (
+      roundType == '2' &&
+      Number(maxAmountNFT) == 0 &&
+      Number(maxAmountNFTPerWallet) == 0 &&
+      Number(startClaim) == 0 &&
+      Number(price) == 0
+    ) {
+      return false;
+    }
+    return (
+      (Number(amountBought) === round.maxPerWallet &&
+        round.maxPerWallet != 0) ||
+      (maxAmountNFT == soldAmountNFT && maxAmountNFT != 0) ||
+      !eligibleStatus ||
+      (!isInTimeframe && hasTimeframe)
+    );
+  }, [
+    roundType,
+    maxAmountNFT,
+    maxAmountNFTPerWallet,
+    startClaim,
+    price,
+    amountBought,
+    round,
+    soldAmountNFT,
+    eligibleStatus,
+    isInTimeframe,
+    hasTimeframe,
+  ]);
 
   return (
     <>
@@ -197,17 +220,18 @@ export default function RoundActionMinting({
           <ConnectWalletButton scale='lg' className='w-full'>
             <Button
               disabled={
-                roundType == '2' &&
-                Number(maxAmountNFT) == 0 &&
-                Number(maxAmountNFTPerWallet) == 0 &&
-                Number(startClaim) == 0 &&
-                Number(price) == 0
-                  ? false
-                  : (Number(amountBought) === round.maxPerWallet &&
-                      round.maxPerWallet != 0) ||
-                    (maxAmountNFT == soldAmountNFT && maxAmountNFT != 0) ||
-                    !eligibleStatus ||
-                    (!isInTimeframe && hasTimeframe)
+                // roundType == '2' &&
+                // Number(maxAmountNFT) == 0 &&
+                // Number(maxAmountNFTPerWallet) == 0 &&
+                // Number(startClaim) == 0 &&
+                // Number(price) == 0
+                //   ? false
+                //   : (Number(amountBought) === round.maxPerWallet &&
+                //       round.maxPerWallet != 0) ||
+                //     (maxAmountNFT == soldAmountNFT && maxAmountNFT != 0) ||
+                //     !eligibleStatus ||
+                //     (!isInTimeframe && hasTimeframe)
+                disableMint
               }
               scale='lg'
               className='w-full'

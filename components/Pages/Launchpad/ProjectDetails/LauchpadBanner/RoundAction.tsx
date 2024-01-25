@@ -11,14 +11,10 @@ import RoundActionMinting from './RoundActions/RoundActionMinting';
 import RoundActionUpcoming from './RoundActions/RoundActionUpcoming';
 import RoundActionUpEnded from './RoundActions/RoundActionEnded';
 import { ZERO_COLLECTION } from '@/config/constants';
+import useLaunchpadStore from '@/store/launchpad/store';
 
-interface Props {
-  collection: Collection;
-  round: Round;
-  isSpecial: boolean;
-}
-
-export default function RoundAction({ round, collection, isSpecial }: Props) {
+export default function RoundAction() {
+  const { round, collection } = useLaunchpadStore((state) => state);
   const api = useLaunchpadApi();
   const { address } = useAccount();
   const { id } = useParams();
@@ -84,18 +80,14 @@ export default function RoundAction({ round, collection, isSpecial }: Props) {
       case 'MINTING':
         return (
           <RoundActionMinting
-            round={round}
             eligibleStatus={!!eligibleStatus}
-            collection={collection}
             setLoading={setLoading}
             loading={loading}
-            isSpecial={isSpecial}
           />
         );
       case 'UPCOMING':
         return (
           <RoundActionUpcoming
-            round={round}
             setLoading={setLoading}
             loading={loading}
             eligibleStatus={!!eligibleStatus}

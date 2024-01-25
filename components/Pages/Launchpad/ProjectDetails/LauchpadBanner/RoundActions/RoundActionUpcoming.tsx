@@ -10,9 +10,9 @@ import { useRoundZero } from '@/hooks/useRoundZero';
 import { APIResponse } from '@/services/api/types';
 import RoundZeroConditionStaking from './RoundZeroConditionStaking';
 import RoundZeroConditionHoldNFT from './RoundZeroConditionHoldNFT';
+import useLaunchpadStore from '@/store/launchpad/store';
 
 interface Props {
-  round: Round;
   eligibleStatus: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
@@ -23,7 +23,6 @@ interface Props {
 }
 
 export default function RoundActionUpcoming({
-  round,
   setLoading,
   loading,
   eligibleStatus,
@@ -32,6 +31,7 @@ export default function RoundActionUpcoming({
   balanceNFT,
   isHolder,
 }: Props) {
+  const { round } = useLaunchpadStore((state) => state);
   const { isSubscribed, onSubscribe } = useRoundZero(round);
   const handleSubscribe = async () => {
     try {

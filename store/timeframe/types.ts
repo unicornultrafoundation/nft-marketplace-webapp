@@ -1,5 +1,3 @@
-import { Collection } from '@/types';
-
 export interface TimeframeStoreState {
   hasTimeframe: boolean;
   isInTimeframe: boolean;

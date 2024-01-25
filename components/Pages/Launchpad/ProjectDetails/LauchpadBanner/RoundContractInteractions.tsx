@@ -5,6 +5,8 @@ import { formatDisplayedBalance, getRoundAbi } from '@/utils';
 import RoundAction from './RoundAction';
 import RoundStatusHeader from './RoundStatusHeader';
 import Timeframes from './Timeframes';
+import { useEffect } from 'react';
+import useLaunchpadStore from '@/store/launchpad/store';
 
 interface Props {
   collection: Collection;
@@ -17,6 +19,12 @@ export default function RoundContractInteractions({
   collection,
   isSpecial,
 }: Props) {
+  const { setCollection, setRound, setIsSpecial } = useLaunchpadStore();
+  useEffect(() => {
+    setCollection(collection);
+    setRound(round);
+    setIsSpecial(isSpecial);
+  }, [round, collection, isSpecial]);
   return (
     <div className='w-full rounded-lg bg-surface-soft flex flex-col gap-4 p-4'>
       <div className='flex items-start justify-between flex-col desktop:flex-row gap-4 desktop:gap-0'>
@@ -67,11 +75,7 @@ export default function RoundContractInteractions({
 
       <div className='w-full h-[1px] bg-gray-200' />
 
-      <RoundAction
-        collection={collection}
-        round={round}
-        isSpecial={isSpecial}
-      />
+      <RoundAction />
     </div>
   );
 }

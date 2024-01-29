@@ -22,47 +22,23 @@ const modalTheme: CustomFlowbiteTheme['modal'] = {
   }
 }
 
-export default function TransferNFTModal({nft, show, onClose, marketData}: Props) {
-  // Cái này không dùng
-  const [error, setError] = useState<Error>()
-
+export default function TransferNFTModal({ nft, show, onClose, marketData }: Props) {
   const handleReset = () => {
     onClose?.()
-    setError(undefined)
   }
 
-  // A có nói là modal sẽ bỏ hết steps đi. Chỉ để 1 step chính thôi.
-  // Có lỗi thì toast error chứ không render error step nữa
   return (
-     <Modal
-        theme={modalTheme}
-        dismissible
-        size="lg"
-        show={show}
-        onClose={handleReset}>
-       <Modal.Body className="p-10">
-         <div className="flex flex-col justify-center items-center gap-4">
-           {
-             !!error ? (
-                <>
-                  <Text className="font-semibold text-error text-center text-heading-sm">
-                    Error report
-                  </Text>
-                  <Tooltip content={error?.message} placement="bottom">
-                    <Text className="max-w-full text-secondary text-center text-ellipsis" variant="body-18">
-                      {error?.message}
-                    </Text>
-                  </Tooltip>
-                  <Button className="w-full" variant="secondary" onClick={handleReset}>
-                    Close
-                  </Button>
-                </>
-                ) 
-             : 
-             <TransferStep nft={nft} marketData={marketData} handleReset={handleReset} />
-           }
-         </div>
-       </Modal.Body>
-     </Modal>
+    <Modal
+      theme={modalTheme}
+      dismissible
+      size="lg"
+      show={show}
+      onClose={handleReset}>
+      <Modal.Body className="p-10">
+        <div className="flex flex-col justify-center items-center gap-4">
+          <TransferStep nft={nft} marketData={marketData} handleReset={handleReset} />
+        </div>
+      </Modal.Body>
+    </Modal>
   )
 }

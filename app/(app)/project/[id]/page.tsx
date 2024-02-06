@@ -8,6 +8,9 @@ import { useParams } from "next/navigation";
 import { useLaunchpadApi } from "@/hooks/useLaunchpadApi";
 import { ClipLoader } from "react-spinners";
 import { colors } from "@/config/theme";
+import SpecialRound from "@/components/Pages/Launchpad/ProjectDetails/SpecialRound";
+import { SPECIAL_ROUND } from "@/config/constants";
+import { useMemo } from "react";
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -17,6 +20,19 @@ export default function ProjectPage() {
     (id: string) => api.fetchProjectById(id),
     { revalidateOnFocus: false },
   );
+
+  const activeRound = useMemo(() => {
+    const active = data?.rounds.find((round) => {
+      return (
+        Date.now() >= new Date(round.start).getTime() &&
+        Date.now() <= new Date(round.end).getTime()
+      );
+    });
+    const next = data?.rounds.find((round) => {
+      return Date.now() < new Date(round.start).getTime();
+    });
+    return active || next || data?.rounds[0];
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -37,7 +53,11 @@ export default function ProjectPage() {
   return (
     <div className="px-4 tablet:px-7 desktop:px-20">
       <div className="mb-20 mt-10">
-        <ProjectPageBanner project={data} />
+        {activeRound?.address === SPECIAL_ROUND ? (
+          <SpecialRound project={data} />
+          ) : (
+          <ProjectPageBanner project={data} />
+        )}
       </div>
 
       <div className="flex items-start gap-6 flex-col desktop:flex-row tablet:flex-row w-full">

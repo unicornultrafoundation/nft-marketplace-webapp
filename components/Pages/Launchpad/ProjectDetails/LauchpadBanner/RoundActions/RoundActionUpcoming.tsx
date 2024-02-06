@@ -3,7 +3,6 @@ import ConnectWalletButton from "@/components/Button/ConnectWalletButton";
 import { format } from "date-fns";
 import { MessageRoundNotEligible } from "../EligibleMessage";
 import Link from "next/link";
-import { Round } from "@/types";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 import { useRoundZero } from "@/hooks/useRoundZero";
@@ -71,8 +70,6 @@ export default function RoundActionUpcoming({
             </Button>
           ) : (
             <div className="flex flex-col gap-3">
-              {/* <MessageRoundNotEligible eligibleStatus={eligibleStatus} /> */}
-
               <div className="flex flex-col desktop:flex-row gap-2 items-stretch tablet:flex-row">
                 <RoundZeroConditionStaking
                   hasStaked={hasStaked}
@@ -94,7 +91,6 @@ export default function RoundActionUpcoming({
       ) : round.type === "U2UPremintRoundWhitelist" ||
         round.type === "U2UMintRoundWhitelist" ? (
         <div>
-          {/* <MessageRoundNotEligible eligibleStatus={eligibleStatus} /> */}
           {!eligibleStatus && (
             <p className="text-secondary italic text-body-12">
               Follow these{" "}

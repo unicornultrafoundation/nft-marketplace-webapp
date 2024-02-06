@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import Icon from "@/components/Icon";
-import Dropdown from "@/components/Dropdown";
+import Dropdown from "@/components/Dropdown/Dropdown";
 import ConnectWalletButton from "@/components/Button/ConnectWalletButton";
 import { navs } from "@/config/nav";
 import useAuthStore from "@/store/auth/store";

@@ -1,6 +1,6 @@
 import { formatEther, formatUnits } from "ethers";
 import Button from "@/components/Button";
-import { MessageRoundNotEligible } from "../EligibleMessage";
+import { MessageRoundNotEligible } from "../LauchpadBanner/EligibleMessage";
 import Icon from "@/components/Icon";
 import ConnectWalletButton from "@/components/Button/ConnectWalletButton";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useAccount, useBalance, useContractReads } from "wagmi";
 import { useLaunchpadApi } from "@/hooks/useLaunchpadApi";
 import useLaunchpadStore from "@/store/launchpad/store";
+import { useTimeframe } from "@/hooks/useTimeframe";
 
 interface Props {
   eligibleStatus: boolean;
@@ -17,7 +18,7 @@ interface Props {
   loading: boolean;
 }
 
-export default function RoundActionMinting({
+export default function SpecialRoundActionMinting({
   eligibleStatus,
   setLoading,
   loading,
@@ -31,11 +32,11 @@ export default function RoundActionMinting({
     watch: true,
     enabled: !!address,
   });
-  const { onBuyNFT } = useWriteRoundContract(
+  const { onBuyNFTCustomized } = useWriteRoundContract(
     round,
     collection,
   );
-  const [amount, setAmount] = useState(1);
+  const { hasTimeframe, currentTimeframe } = useTimeframe(round);
 
   const { data } = useContractReads({
     contracts: [
@@ -67,35 +68,10 @@ export default function RoundActionMinting({
   const price = (roundInfo as any)?.price;
 
   const estimatedCost = useMemo(() => {
-    const totalCostBN = BigInt(round.price || 0) * BigInt(amount || 0);
+    const totalCostBN = BigInt(round.price || 0) * BigInt(1);
     const totalCost = formatEther(totalCostBN);
     return formatDisplayedBalance(totalCost);
-  }, [round, amount]);
-
-  const handleAddAmount = (num: number) => {
-    handleInputAmount(amount + num);
-  };
-
-  const handleInputAmount = (value: number) => {
-    if (!address) {
-      toast.warning("Please connect your wallet first");
-      return;
-    }
-
-    if (value < 0) return;
-
-    if (value > amount) {
-      if (
-        !balanceInfo ||
-        !balanceInfo?.value ||
-        balanceInfo.value < BigInt(round.price) * BigInt(value)
-      ) {
-        toast.error("Not enough U2U balance");
-        return;
-      }
-    }
-    setAmount(value);
-  };
+  }, [round]);
 
   const handleBuyNFT = async () => {
     if (
@@ -109,10 +85,7 @@ export default function RoundActionMinting({
 
     try {
       setLoading(true);
-      const { waitForTransaction, hash } =
-        collection.type === "ERC721"
-          ? await onBuyNFT()
-          : await onBuyNFT(amount);
+      const { waitForTransaction, hash } = await onBuyNFTCustomized();
       await waitForTransaction();
       toast.success("Your item has been successfully purchased!");
       api.crawlNFTInfo({
@@ -141,7 +114,8 @@ export default function RoundActionMinting({
       (Number(amountBought) === round.maxPerWallet &&
         round.maxPerWallet != 0) ||
       (maxAmountNFT == soldAmountNFT && maxAmountNFT != 0) ||
-      !eligibleStatus
+      !eligibleStatus ||
+      (!currentTimeframe.isInTimeframe && hasTimeframe)
     );
   }, [
     roundType,
@@ -153,6 +127,8 @@ export default function RoundActionMinting({
     round,
     soldAmountNFT,
     eligibleStatus,
+    currentTimeframe.isInTimeframe,
+    hasTimeframe,
   ]);
 
   return (
@@ -165,28 +141,24 @@ export default function RoundActionMinting({
         {collection.type === "ERC1155" ? (
           <div className="flex-1 flex items-center gap-3">
             <div className="flex max-w-fit items-center px-4 py-3 gap-4 bg-surface-medium rounded-lg">
-              <div onClick={() => handleAddAmount(-1)}>
-                <Icon
-                  className="cursor-pointer text-secondary"
-                  name="minus"
-                  width={24}
-                  height={24}
-                />
-              </div>
+              <Icon
+                className="cursor-pointer text-secondary"
+                name="minus"
+                width={24}
+                height={24}
+              />
 
               <input
-                value={amount}
-                onChange={(e) => handleInputAmount(Number(e.target.value))}
+                disabled
+                value="1"
                 className="border-none overflow-visible bg-transparent w-10 text-center p-0 outline-none text-body-18 font-medium"
               />
-              <div onClick={() => handleAddAmount(1)}>
-                <Icon
-                  className="cursor-pointer text-secondary"
-                  name="plus"
-                  width={24}
-                  height={24}
-                />
-              </div>
+              <Icon
+                className="cursor-pointer text-secondary"
+                name="plus"
+                width={24}
+                height={24}
+              />
             </div>
             <p className="text-body-16 text-secondary">
               Total:{" "}

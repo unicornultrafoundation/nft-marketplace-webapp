@@ -1,7 +1,6 @@
 import { Address, erc721ABI, useAccount, useContractRead } from "wagmi";
 import { useMemo, useState } from "react";
 import { formatUnits } from "ethers";
-import { Collection, Round } from "@/types";
 import { useRoundStatus } from "@/hooks/useRoundStatus";
 import useSWR from "swr";
 import { useParams } from "next/navigation";

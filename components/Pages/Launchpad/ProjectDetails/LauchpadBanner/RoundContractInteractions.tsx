@@ -13,20 +13,17 @@ import RoundStatusHeader from "./RoundStatusHeader";
 interface Props {
   collection: Collection;
   round: Round;
-  isSpecial: boolean;
 }
 
 export default function RoundContractInteractions({
   round,
   collection,
-  isSpecial,
 }: Props) {
-  const { setCollection, setRound, setIsSpecial } = useLaunchpadStore();
+  const { setCollection, setRound } = useLaunchpadStore();
   useEffect(() => {
     setCollection(collection);
     setRound(round);
-    setIsSpecial(isSpecial);
-  }, [round, collection, isSpecial, setCollection, setRound, setIsSpecial]);
+  }, [round, collection, setCollection, setRound]);
   return (
     <div className="w-full rounded-lg bg-surface-soft flex flex-col gap-4 p-4">
       <div className="flex items-start justify-between flex-col tablet:flex-row desktop:flex-row gap-4 desktop:gap-0">
@@ -73,7 +70,6 @@ export default function RoundContractInteractions({
       </div>
 
       <div className="w-full h-[1px] bg-gray-200" />
-
       <RoundAction />
     </div>
   );

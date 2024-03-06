@@ -126,6 +126,7 @@ export default function CollectionPage() {
           toggleFilter={() => toggleFilter()}
           activeFilters={filters}
           onSearch={(name) => updateFilters({ name })}
+          collectionAddress={collectionData.collection.address}
         />
         <div className="flex gap-4 desktop:flex-row flex-col">
           <NFTsList

@@ -19,6 +19,8 @@ const DEFAULT_FILTERS_BY_COLLECTION = {
     owner: undefined,
     page: 1,
     limit: 20,
+    order: "",
+    orderBy: ""
   },
 };
 

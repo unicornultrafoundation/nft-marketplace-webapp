@@ -220,7 +220,13 @@ export default function SellNFTModal({
   };
 
   return (
-    <Modal theme={modalTheme} dismissible size="lg" show={show} onClose={onClose}>
+    <Modal
+      theme={modalTheme}
+      dismissible
+      size="lg"
+      show={show}
+      onClose={onClose}
+    >
       <Modal.Body className="p-10">
         <div className="flex flex-col justify-center items-center gap-4">
           <form

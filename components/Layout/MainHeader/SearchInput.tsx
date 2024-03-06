@@ -2,22 +2,23 @@
 import Icon from "@/components/Icon";
 import InputDropdown from "@/components/Form/InputDropdown";
 import Button from "@/components/Button";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { CustomFlowbiteTheme, Tabs, TabsRef } from "flowbite-react";
+import { useEffect } from "react";
+import { CustomFlowbiteTheme, Modal, Tabs } from "flowbite-react";
 import SearchUserTab from "./UserTab";
 import SearchCollectionTab from "./CollectionTab";
 import SearchNFTTab from "./NFTTab";
-import { useMarketplaceApi } from "@/hooks/useMarketplaceApi";
-import { Modal } from "flowbite-react";
-import Input from "@/components/Form/Input";
 import { isMobile } from "react-device-detect";
+// import { useSearch, useSearchCollection, useSearchNft, useSearchUser } from "@/hooks/useSearch";
+import { useMarketplaceApi } from "@/hooks/useMarketplaceApi";
 import useSWRMutation from "swr/mutation";
+import { useSearch } from "@/hooks/useSearch";
+
 
 const modalTheme: CustomFlowbiteTheme["modal"] = {
   content: {
     inner:
       "relative rounded-lg bg-white shadow flex flex-col tablet:h-full h-full desktop:h-auto ",
-    base: "relative w-full p-4 desktop:p-10 tablet:p-10 desktop:h-auto h-full tablet:h-full max-h-[90vh]",
+    base: "relative w-full p-3 desktop:p-10 tablet:p-10 desktop:h-auto h-full tablet:h-full max-h-[85vh]",
   },
   body: {
     base: "p-0 flex-1 overflow-auto",
@@ -25,35 +26,24 @@ const modalTheme: CustomFlowbiteTheme["modal"] = {
 };
 
 export default function SearchInput() {
-  const api = useMarketplaceApi();
-  const [openModal, setOpenModal] = useState(false);
-  const [text, setText] = useState({
-    collection: "",
-    nft: "",
-    user: "",
-  });
-  const tabsRef = useRef<TabsRef>(null);
-  const [activeTab, setActiveTab] = useState(0);
-  const searchKey = useMemo(() => {
-    switch (activeTab) {
-      case 0:
-        return "collection";
-      case 1:
-        return "nft";
-      case 2:
-        return "user";
-    }
-  }, [activeTab]);
+  const {
+    setActiveTab,
+    handleTextInput,
+    searchKey,
+    text,
+    tabsRef,
+    openModal,
+    setOpenModal,
+    searchString,
+  } = useSearch();
 
-  const searchString = useMemo(
-    () => (searchKey ? text[searchKey] : ""),
-    [searchKey, text],
-  );
+  const api = useMarketplaceApi();
 
   const {
     trigger: searchCollection,
     data: collectionSearchData,
     isMutating: searchingCollection,
+    reset: resetCollection,
   } = useSWRMutation(text.collection || null, (text) =>
     api.searchCollections(text),
   );
@@ -62,12 +52,14 @@ export default function SearchInput() {
     trigger: searchNFTs,
     data: nftSearchData,
     isMutating: searchingNFT,
+    reset: resetNft,
   } = useSWRMutation(text.nft || null, (text) => api.searchNFTs(text));
 
   const {
     trigger: searchUsers,
     data: userSearchData,
     isMutating: searchingUser,
+    reset: resetUser,
   } = useSWRMutation(text.user || null, (text) => api.searchUsers(text));
 
   const handleSearch = () => {
@@ -82,20 +74,15 @@ export default function SearchInput() {
     }
   };
 
-  const handleTextInput = async (value: string) => {
-    if (!searchKey) return;
-    setText({
-      ...text,
-      [searchKey]: value,
-    });
-  };
-
   useEffect(() => {
     // Lazy search
+    resetCollection();
+    resetNft();
+    resetUser();
     const timeOutId = setTimeout(handleSearch, 200);
     return () => clearTimeout(timeOutId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchString]);
+  }, [searchString,text]);
 
   return (
     <>

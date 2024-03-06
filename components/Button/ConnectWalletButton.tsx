@@ -27,11 +27,11 @@ export default function ConnectWalletButton({
   const { isValidSession } = useAuth();
 
   const handleConnectWallet = () => {
-    if (typeof localStorage !== 'undefined') {
+    if (typeof localStorage !== "undefined") {
       if (!isValidSession) {
-        localStorage.removeItem('auth-storage');
+        localStorage.removeItem("auth-storage");
         setShowWalletConnect(true);
-      }else {
+      } else {
         // Access Token has been saved in auth store
         action?.();
       }

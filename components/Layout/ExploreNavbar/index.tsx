@@ -140,13 +140,13 @@ export default function ExploreSectionNavbar() {
     setSortOption({name, order, orderBy });
   };
 
-  useEffect(() => {
-    if (pathname.includes("collections")) {
-      sortCollections(sortOption);
-    } else if (pathname.includes("items")) {
-      sortNFTs(sortOption);
-    }
-  }, [sortOption,pathname]);
+  // useEffect(() => {
+  //   if (pathname.includes("collections")) {
+  //     sortCollections(sortOption);
+  //   } else if (pathname.includes("items")) {
+  //     sortNFTs(sortOption);
+  //   }
+  // }, [sortOption,pathname]);
   
 
   useEffect(() => {
@@ -212,7 +212,7 @@ export default function ExploreSectionNavbar() {
         />
       </div>
 
-      {!pathname.includes("users") && (
+      {/* {!pathname.includes("users") && (
         <div className="order-4">
           <Dropdown
             label=""
@@ -234,7 +234,7 @@ export default function ExploreSectionNavbar() {
             ))}
           </Dropdown>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

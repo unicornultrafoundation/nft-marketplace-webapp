@@ -65,10 +65,10 @@ export default function FiltersSectionCollection({
     setSortOption({name, order, orderBy });
   };
 
-  useEffect(() => {
-    sortNFTs(sortOption);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortOption]);
+  // useEffect(() => {
+  //   sortNFTs(sortOption);
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [sortOption]);
 
   return (
     <div className="flex gap-4 flex-wrap justify-between desktop:flex-nowrap mb-4 tablet:mb-8 desktop:mb-8">
@@ -98,7 +98,7 @@ export default function FiltersSectionCollection({
           appendIconContainerClass="w-6 h-6 bg-surface-medium rounded-lg top-1/4 right-4 py-0 pr-0 pl-1.5"
         />
       </div>
-      <div className="order-4">
+      {/* <div className="order-4">
           <Dropdown
             label=""
             renderTrigger={() => (
@@ -118,7 +118,7 @@ export default function FiltersSectionCollection({
               </Dropdown.Item>
             ))}
           </Dropdown>
-        </div>
+        </div> */}
     </div>
   );
 }

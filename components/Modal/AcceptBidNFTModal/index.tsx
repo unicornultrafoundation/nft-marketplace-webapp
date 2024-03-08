@@ -272,6 +272,7 @@ export default function AcceptBidNFTModal({ nft, show, onClose, bid }: Props) {
                 </>
               ) : (
                 <NFTApproval
+                  loading={loading}
                   nft={nft}
                   isMarketContractApprovedToken={isMarketContractApprovedToken}
                   handleApproveTokenForAll={handleApproveTokenForAll}

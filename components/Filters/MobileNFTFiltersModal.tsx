@@ -144,7 +144,7 @@ export default function MobileNFTFiltersModal({
               />
               <Select
                 options={tokenOptions}
-                containerClass="w-2/3"
+                containerClass="tablet:w-2/3 w-full"
                 scale="sm"
                 value={localFilters.quoteToken}
                 onChange={(e) =>

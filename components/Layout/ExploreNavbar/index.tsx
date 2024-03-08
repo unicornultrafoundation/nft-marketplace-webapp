@@ -29,7 +29,7 @@ export default function ExploreSectionNavbar() {
   const pathname = usePathname();
   const router = useRouter();
   const tabsRef = useRef<TabsRef>(null);
-  const [sortOption, setSortOption] = useState({name: "Date: Ascending", order: 'asc', orderBy: 'time' });
+  const [sortOption, setSortOption] = useState({name: "Date: Descending", order: 'desc', orderBy: 'time' });
 
   const {
     filters: { name: collectionSearchText },

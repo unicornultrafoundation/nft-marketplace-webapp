@@ -37,12 +37,8 @@ export const useMarketApproveNFT = (nft: NFT) => {
 
   const isMarketContractApprovedToken = useMemo(() => {
     if (nft.collection.address === tokens.wu2u.address) return true;
-    if (type === "ERC721") {
-      if (isMarketContractApprovedForAll) return true;
-      if (isMarketContractApprovedForSingle) return true;
-    } else {
-      if (isMarketContractApprovedForAll) return true;
-    }
+    if (type === "ERC721" && (isMarketContractApprovedForAll || isMarketContractApprovedForSingle)) return true;
+    if (type !== "ERC721" && isMarketContractApprovedForAll) return true;
     return false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

@@ -7,6 +7,7 @@ interface Props {
   isMarketContractApprovedToken?: boolean;
   handleApproveTokenForAll: () => void;
   handleApproveTokenForSingle: () => void;
+  loading?: boolean
 }
 
 export default function NFTApproval({
@@ -14,6 +15,7 @@ export default function NFTApproval({
   isMarketContractApprovedToken,
   handleApproveTokenForAll,
   handleApproveTokenForSingle,
+  loading
 }: Props) {
   return (
     <div className="w-full flex flex-col gap-2">
@@ -25,12 +27,14 @@ export default function NFTApproval({
           </Text>
         </div>
       </div>
-      <div className="flex items-center gap-2 justify-center">
+      
+      <div className="flex items-center gap-2 justify-center flex-col tablet:flex-row ">
         {nft.collection.type === "ERC721" ? (
           <Button
+            loading= {loading}
             variant="secondary"
             onClick={handleApproveTokenForSingle}
-            className="p-3 flex-1"
+            className="p-3 flex-1 w-full tablet:w-auto"
           >
             Approve Token for Single
           </Button>
@@ -38,9 +42,10 @@ export default function NFTApproval({
           ""
         )}
         <Button
+          loading= {loading}
           variant="secondary"
           onClick={handleApproveTokenForAll}
-          className="p-3 flex-1"
+          className="p-3 flex-1 w-full tablet:w-auto"
         >
           Approve Token for All
         </Button>

@@ -89,7 +89,7 @@ export default function BannerSection() {
           onChange={(e) => handleUploadAvatar(e.target.files)}
         />
         <Image
-          className="rounded-2xl w-full h-auto object-cover"
+          className="rounded-2xl w-full h-[120px] object-cover"
           src={avatar || getUserAvatarImage()}
           alt="Avatar"
           width={256}

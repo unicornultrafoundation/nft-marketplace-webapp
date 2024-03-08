@@ -39,7 +39,7 @@ export default function Profile({ user, onRefresh }: Props) {
             alt="user-detail-bg"
             width={120}
             height={120}
-            className="rounded-2xl w-[80px] h-[80px] tablet:w-[120px] desktop:w-[120px] tablet:h-[120px] desktop:h-[120px]"
+            className="rounded-2xl w-[80px] h-[80px] tablet:w-[120px] desktop:w-[120px] tablet:h-[120px] desktop:h-[120px] object-cover"
           />
         </div>
       </div>

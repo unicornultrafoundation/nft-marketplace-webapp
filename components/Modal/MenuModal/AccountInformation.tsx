@@ -46,13 +46,16 @@ export default function MenuAccountInformation({ onClose }: Props) {
       <div className="w-full flex flex-col gap-4 ">
         <div className="flex items-center gap-4">
           <div className="flex gap-3 items-center">
-            <Image
-              src={avatar || getUserAvatarImage()}
-              alt="Avatar"
-              width={48}
-              height={48}
-              className="rounded-full"
-            />
+            <div className="w-[48px] h-[48px]">
+              <Image
+                src={avatar || getUserAvatarImage()}
+                alt="Avatar"
+                width={48}
+                height={48}
+                className="rounded-full w-full h-[48px] object-cover"
+              />
+            </div>
+
             <Link
               href={getUserLink(profile)}
               className="flex flex-col "

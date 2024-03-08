@@ -94,13 +94,15 @@ export default function MainHeader() {
               showConnectButton
               action={() => setShowMenu(true)}
             >
-              <Image
-                className="cursor-pointer select-none opacity-80 hover:opacity-100 transition-opacity rounded-full"
-                src={getUserAvatarImage(user)}
-                alt="Avatar"
-                width={35}
-                height={35}
-              />
+              <div className="w-[35px] h-[35px]">
+                <Image
+                  className="cursor-pointer select-none opacity-80 hover:opacity-100 transition-opacity rounded-full w-full h-[35px] object-cover"
+                  src={getUserAvatarImage(user)}
+                  alt="Avatar"
+                  width={35}
+                  height={35}
+                />
+              </div>
             </ConnectWalletButton>
           </div>
 

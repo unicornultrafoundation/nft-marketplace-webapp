@@ -5,7 +5,6 @@ import { Tabs } from "flowbite-react";
 import AccountStep from "@/components/Pages/MarketplaceNFT/ProfileSettings/AccountStep";
 import ProfileStep from "@/components/Pages/MarketplaceNFT/ProfileSettings/ProfileStep";
 import WalletStep from "@/components/Pages/MarketplaceNFT/ProfileSettings/WalletStep";
-import NotificationStep from "@/components/Pages/MarketplaceNFT/ProfileSettings/NotificationStep";
 import BannerSection from "@/components/Pages/MarketplaceNFT/ProfileSettings/BannerSection";
 import { useAuth } from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
@@ -17,10 +16,10 @@ export default function ProfilePage() {
   }, [isValidSession]);
 
   return (
-    <div className="w-full relative flex flex-col items-center desktop:py-10 tablet:p-10 py-16 px-4">
+    <div className="w-full relative gap-10 tablet:gap-8 desktop:gap-8 flex flex-col items-center desktop:py-10 desktop:px-60 tablet:py-10 tablet:px-16 py-4 px-4">
       <BannerSection />
 
-      <div className="w-full block desktop:mt-[78px] tablet:mt-[78px] mt-[86px] desktop:px-24 px-0">
+      <div className="w-full ">
         <Tabs.Group style="underline">
           <Tabs.Item active title="Profile">
             <ProfileStep />

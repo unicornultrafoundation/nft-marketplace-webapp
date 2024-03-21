@@ -80,8 +80,8 @@ export default function BannerSection() {
   };
 
   return (
-    <div className="bg-cover relative w-full h-[180px] rounded-2xl">
-      <div className="absolute ml-6 block w-[120px] h-[120px] bottom-[-46px]">
+    <div className="bg-cover relative w-full h-[226px] rounded-2xl">
+      <div className="absolute ml-6 bottom-0">
         <input
           className="absolute left-0 right-0 w-full h-full opacity-0 cursor-pointer"
           type="file"
@@ -89,7 +89,7 @@ export default function BannerSection() {
           onChange={(e) => handleUploadAvatar(e.target.files)}
         />
         <Image
-          className="rounded-2xl w-full h-[120px] object-cover"
+          className="rounded-2xl w-[120px] h-[120px] object-cover"
           src={avatar || getUserAvatarImage()}
           alt="Avatar"
           width={256}

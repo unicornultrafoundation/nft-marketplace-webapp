@@ -91,13 +91,13 @@ export default function ProfileStep() {
   };
 
   return (
-    <div className="flex gap-4 w-full desktop:flex-row tablet:flex-row flex-col-reverse">
+    <div className="flex gap-8 w-full desktop:flex-row tablet:flex-row flex-col-reverse mt-10 tablet:mt-8 desktop:mt-8">
       <form className="flex-1" onSubmit={handleSubmit(onSubmitProfile)}>
         <div className="flex gap-8 mb-8">
-          <div className="desktop:mt-5 tablet:mt-5 mt-7 flex gap-8 w-full flex-col">
+          <div className=" flex gap-8 w-full flex-col">
             <div>
               <label className="block mb-2 font-semibold text-primary">
-                Username
+                Display name
               </label>
               <Input
                 placeholder="Limit 6 to 25 characters"
@@ -200,7 +200,7 @@ export default function ProfileStep() {
 
       <div className="flex items-center justify-center desktop:items-start tablet:items-start ">
         <div
-          className=" w-[244px] rounded-2xl flex justify-center items-center p-4 gap-2 flex-col text-center mt-10 desktop:ml-20 tablet:ml-20"
+          className=" w-[244px] rounded-2xl flex justify-center items-center p-4 gap-2 flex-col text-center"
           style={{ boxShadow: "rgba(27, 32, 50, 0.12) 0px 10px 40px" }}
         >
           <div>

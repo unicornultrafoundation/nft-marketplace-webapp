@@ -61,7 +61,7 @@ export default function OwnersTab({
 
   return (
     <div className="w-full py-7">
-      <div className="w-full p-3 desktop:p-5 tablet:p-4  flex flex-col desktop:gap-4 tablet:gap-4 gap-3 rounded-2xl border border-disabled border-dashed">
+      <div className="w-full p-3 desktop:p-5 tablet:p-4  flex flex-col desktop:gap-4 tablet:gap-4 gap-3 rounded-2xl border">
         {!marketData || !owners.length ? (
           <Text className="text-secondary font-semibold text-body-4 text-center">
             Nothing to show

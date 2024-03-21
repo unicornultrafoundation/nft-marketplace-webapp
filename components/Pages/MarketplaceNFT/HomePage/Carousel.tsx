@@ -33,7 +33,7 @@ const carouselTheme: CustomFlowbiteTheme["carousel"] = {
     wrapper: "absolute bottom-3 left-1/2 flex -translate-x-1/2 space-x-3",
   },
   item: {
-    base: "absolute px-3 desktop:px-1 top-1/2 left-1/2 block w-full -translate-x-1/2 -translate-y-1/2"
+    base: "absolute px-3 desktop:px-1 top-1/2 left-1/2 block w-full -translate-x-1/2 -translate-y-1/2",
   },
 };
 
@@ -52,42 +52,42 @@ export default function CarouselBanner() {
   ];
 
   return (
-      <div className="flex justify-center items-center w-full">
-        <div className="desktop:w-[480px] desktop:h-[480px] tablet:w-[340px] tablet:h-[340px] w-full h-[320px] ">
-          <Carousel
-              pauseOnHover
-              theme={carouselTheme}
-              indicators={true}
-              slideInterval={5000}
-          >
-            {sliderImages.map((image, index) => (
-                <div
-                    key={index}
-                    className="flex h-full w-full  justify-center items-center"
-                >
-                  <Image
-                      className="rounded-2xl object-cover w-full h-full"
-                      src={image.src}
-                      alt={image.alt}
-                      width={500}
-                  />
-                  {image.showButton && (
-                      <div className="absolute bottom-8 px-10 w-full">
-                        <Link target="_blank" href={image.link}>
-                          <Button
-                              className="w-full flex items-center justify-center  shadow-2xl shadow-cyan-500/50 opacity-70 hover:opacity-100"
-                              scale="lg"
-                              variant="secondary"
-                          >
-                            <span className="text-black">Discover</span>
-                          </Button>
-                        </Link>
-                      </div>
-                  )}
+    <div className="flex justify-center items-center w-full">
+      <div className="desktop:w-[480px] desktop:h-[480px] tablet:w-[340px] tablet:h-[340px] w-full h-[320px] ">
+        <Carousel
+          pauseOnHover
+          theme={carouselTheme}
+          indicators={true}
+          slideInterval={5000}
+        >
+          {sliderImages.map((image, index) => (
+            <div
+              key={index}
+              className="flex h-full w-full  justify-center items-center"
+            >
+              <Image
+                className="rounded-2xl object-cover w-full h-full"
+                src={image.src}
+                alt={image.alt}
+                width={500}
+              />
+              {image.showButton && (
+                <div className="absolute bottom-8 px-10 w-full">
+                  <Link target="_blank" href={image.link}>
+                    <Button
+                      className="w-full flex items-center justify-center  shadow-2xl shadow-cyan-500/50 opacity-70 hover:opacity-100"
+                      scale="lg"
+                      variant="secondary"
+                    >
+                      <span className="text-black">Discover</span>
+                    </Button>
+                  </Link>
                 </div>
-            ))}
-          </Carousel>
-        </div>
+              )}
+            </div>
+          ))}
+        </Carousel>
       </div>
+    </div>
   );
 }

@@ -22,7 +22,6 @@ import ImageUploader from "@/components/Form/ImageUploader";
 import { ALLOWED_FILE_TYPES, ALLOWED_IMAGE_TYPES } from "@/config/constants";
 import PlusCircleIcon from "@/components/Icon/PlusCircle";
 import { redirect, useParams, useRouter } from "next/navigation";
-import { decimalRegex, numberRegex } from "@/utils/regex";
 import { formRulesCreateNFT } from "@/config/form/rules";
 
 export default function CreateNftPage() {

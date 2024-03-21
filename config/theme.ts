@@ -75,8 +75,8 @@ export const typography = {
   "heading-xs": [
     "24px",
     {
-      lineHeight: "24px",
-      letterSpacing: "-0.5px",
+      lineHeight: "28px",
+      letterSpacing: "-1px",
     },
   ],
   "body-18": [
@@ -96,8 +96,8 @@ export const typography = {
   "body-14": [
     "14px",
     {
-      lineHeight: "21px",
-      letterSpacing: "0px",
+      lineHeight: "20px",
+      letterSpacing: "-0.2px",
     },
   ],
   "body-12": [

@@ -80,8 +80,9 @@ export default function MobileCollectionFiltersModal({
 
         <div className="mt-6">
           <Button
-            className="w-full"
-            variant="text"
+            className="w-full mb-5"
+            variant="secondary"
+            scale="sm"
             onClick={() => {
               setLocalFilters({
                 min: "",
@@ -92,8 +93,9 @@ export default function MobileCollectionFiltersModal({
               onClose?.();
             }}
           >
-            Clear <Icon name="close" width={20} height={20} />
+            Reset <Icon name="refresh" width={12} height={12} />
           </Button>
+          
           <div className="w-full flex items-center gap-2 mt-2">
             <Button
               scale="sm"

@@ -93,13 +93,13 @@ export default function CollectionsList({
                 <div className="flex flex-col rounded-xl border border-1 hover:shadow-md border-soft transition-all">
                   <div className="relative">
                     <Image
-                      className="cursor-pointer rounded-tl-xl rounded-tr-xl object-cover w-full h-[100px]"
+                      className="cursor-pointer rounded-tl-xl rounded-tr-xl object-cover w-full h-24"
                       src={getCollectionBannerImage(c)}
                       alt="Cover"
                       width={1200}
                       height={256}
                     />
-                    <div className="absolute rounded-full w-14 h-14 top-14 left-4 border-2 border-white">
+                    <div className="absolute rounded-full w-14 h-14 top-16 left-4 border-2 border-white">
                       <Image
                         className="cursor-pointer rounded-full object-cover w-full h-full"
                         src={getCollectionAvatarImage(c)}
@@ -109,55 +109,53 @@ export default function CollectionsList({
                       />
                     </div>
                   </div>
-                  <div className="pt-6 px-3 pb-4 flex justify-between">
-                    <div className="flex gap-2 w-full justify-between">
-                      <div className="flex gap-2 flex-col">
-                        <div className="flex gap-1 items-center">
-                          <Tooltip content={c.name} placement="bottom">
-                            <Text className="font-medium text-ellipsis whitespace-nowrap text-gray-900 max-w-[100px] overflow-hidden break-words">
-                              {c.name}
-                            </Text>
-                          </Tooltip>
-                          {c.creators &&
-                          c.creators.length > 0 &&
-                          c.creators[0].user.accountStatus &&
-                          c.isVerified ? (
-                            <Icon name="verify-active" width={16} height={16} />
-                          ) : (
-                            <Icon
-                              name="verify-disable"
-                              width={16}
-                              height={16}
-                            />
-                          )}
-                        </div>
-                        <div className="flex gap-2">
-                          <Text className="text-body-12 font-medium">
-                            {c.totalOwner}
+                  <div className="pt-8 px-3 pb-4 flex justify-between">
+                    <div className="flex gap-2 w-full flex-col">
+                      <div className="flex gap-1 items-center">
+                        <Tooltip content={c.name} placement="bottom">
+                          <Text className="font-medium text-ellipsis whitespace-nowrap text-gray-900 max-w-[100px] overflow-hidden break-words">
+                            {c.name}
                           </Text>
+                        </Tooltip>
+                        {c.creators &&
+                        c.creators.length > 0 &&
+                        c.creators[0].user.accountStatus &&
+                        c.isVerified ? (
+                          <Icon name="verify-active" width={16} height={16} />
+                        ) : (
+                          <Icon name="verify-disable" width={16} height={16} />
+                        )}
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="flex items-center gap-1 flex-col">
                           <Text className="text-body-12 text-secondary">
                             Owners
                           </Text>
+                          <Text className="text-body-12">{c.totalOwner}</Text>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-2 flex-col">
-                        <Text className="text-body-12 font-medium">Items</Text>
-                        <Text className="text-body-12 text-secondary">
-                          {c.totalNft}
-                        </Text>
-                      </div>
-                      <div className="flex items-center gap-2 flex-col">
-                        <Text className="text-body-12 font-medium">Volume</Text>
-                        <Text className="text-body-12 text-secondary">
-                          {formatDisplayedNumber(formatUnits(c.volumn || 0))}{" "}
-                          U2U
-                        </Text>
-                      </div>
-                      <div className="flex items-center gap-2 flex-col">
-                        <Text className="text-body-12 font-medium">Floor</Text>
-                        <Text className="text-body-12 text-secondary">
-                          {formatDisplayedNumber(c.floorPrice || 0)} U2U
-                        </Text>
+                        <div className="flex items-center gap-1 flex-col">
+                          <Text className="text-body-12 text-secondary">
+                            Items
+                          </Text>
+                          <Text className="text-body-12 ">{c.totalNft}</Text>
+                        </div>
+                        <div className="flex items-center gap-1 flex-col">
+                          <Text className="text-body-12 text-secondary">
+                            Volume
+                          </Text>
+                          <Text className="text-body-12">
+                            {formatDisplayedNumber(formatUnits(c.volumn || 0))}{" "}
+                            U2U
+                          </Text>
+                        </div>
+                        <div className="flex items-center gap-1 flex-col">
+                          <Text className="text-body-12 text-secondary">
+                            Floor
+                          </Text>
+                          <Text className="text-body-12">
+                            {formatDisplayedNumber(c.floorPrice || 0)} U2U
+                          </Text>
+                        </div>
                       </div>
                     </div>
                   </div>

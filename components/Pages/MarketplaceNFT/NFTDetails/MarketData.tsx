@@ -38,7 +38,7 @@ export default function NFTMarketData({
   }
 
   return (
-    <div className="flex flex-col gap-10 justify-between w-full">
+    <div className="flex flex-col gap-10 desktop:w-auto tablet:w-full">
       {/* NFT info */}
       <div className="flex flex-col gap-3">
         <div className="flex gap-2  items-center">

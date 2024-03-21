@@ -12,7 +12,7 @@ const tab: CustomFlowbiteTheme["tab"] = {
       base: "flex items-center justify-center px-4 py-3 text-body-14 font-medium first:ml-0 disabled:cursor-not-allowed focus:outline-none",
       styles: {
         default: {
-          base: "rounded-xl flex-1",
+          base: "rounded-xl flex-1 hover:bg-white transition-all",
           active: {
             on: "bg-white text-primary shadow",
             off: "text-secondary bg-transparent",

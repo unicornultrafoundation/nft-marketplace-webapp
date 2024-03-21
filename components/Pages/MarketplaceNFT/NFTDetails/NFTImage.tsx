@@ -38,15 +38,15 @@ export default function NFTImage({ item }: { item: NFT }) {
     switch (fileType) {
       case "audio":
         return (
-          <div className="relative desktop:h-[512px] tablet:h-auto w-full h-[280px] p-2 rounded-2xl mb-10">
+          <div className="desktop:w-[640px] desktop:h-[614px] tablet:w-[410px] tablet:h-[394px] w-[341px] h-[341px] relative">
             <Image
               src={item?.image || ""}
               alt=""
               width={512}
               height={512}
-              className="object-cover w-full h-full rounded-2xl"
+              className="object-cover w-full h-full rounded-2xl mb-10"
             />
-            <audio className="w-[95%] absolute bottom-1 h-[25px]" controls>
+            <audio className="absolute bottom-0 h-10 desktop:w-[640px] tablet:w-[410px] w-[341px]" controls>
               <source
                 src={displayMedia}
                 type={`${fileType}/${fileExtension}`}
@@ -58,7 +58,7 @@ export default function NFTImage({ item }: { item: NFT }) {
       case "video":
         return (
           <video
-            className="desktop:w-[512px] desktop:h-[512px] tablet:h-auto w-full h-[280px] rounded-2xl mb-10"
+            className="desktop:w-[640px] desktop:h-[614px] tablet:w-[410px] tablet:h-[394px] w-[341px] h-[341px] rounded-2xl mb-10"
             controls
           >
             <source src={displayMedia} type={`${fileType}/${fileExtension}`} />
@@ -67,13 +67,15 @@ export default function NFTImage({ item }: { item: NFT }) {
         );
       case "image":
         return (
-          <Image
-            src={displayMedia}
-            alt=""
-            width={512}
-            height={512}
-            className="object-cover desktop:w-[512px] desktop:h-[512px] tablet:h-auto w-full h-[280px] rounded-2xl mb-10"
-          />
+          <div className="desktop:w-[640px] desktop:h-[614px] tablet:w-[410px] tablet:h-[394px] w-[341px] h-[341px]">
+            <Image
+              src={displayMedia}
+              alt=""
+              width={512}
+              height={512}
+              className="object-cover w-full h-full rounded-2xl mb-10"
+            />
+          </div>
         );
     }
   };

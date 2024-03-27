@@ -1,141 +1,138 @@
-import { useMemo, useState } from 'react'
-import { usePathname } from 'next/navigation'
-import { useUIStore } from '@/store/ui/store'
-import { APIParams } from '@/services/api/types'
-import { parseEther } from 'ethers'
-import { FilterKey, SearchKey } from '@/store/ui/types'
-import { sanitizeObject } from '@/utils'
+import { useCallback, useEffect, useState } from "react";
+import { APIParams } from "@/services/api/types";
+import { sanitizeObject } from "@/utils";
+import { toast } from "react-toastify";
+import { Trait } from "@/types";
+import { tokens } from "@/config/tokens";
 
-export const useExploreSectionFilters = () => {
-  const pathname = usePathname()
-  const { showFilters, toggleFilter, queryString, setQueryString } = useUIStore(state => state)
+export const useNFTFilters = (
+  activeFilters: APIParams.FetchNFTs,
+  onApplyFilters?: (filters: APIParams.FetchNFTs) => void,
+) => {
+  const [localFilters, setLocalFilters] =
+    useState<APIParams.FetchNFTs>(activeFilters);
 
-  const routeKey: FilterKey = useMemo(() => {
-    switch (true) {
-      case pathname.includes('collections'):
-        return 'collections'
-      case pathname.includes('profile'):
-        return 'profile'
-      case pathname.includes('items'):
-      default:
-        return 'nfts'
+  const handleChange = ({
+    updateOnChange,
+    ...params
+  }: Partial<APIParams.FetchNFTs> & { updateOnChange?: boolean }) => {
+    const newFilters = { ...localFilters, ...params };
+    setLocalFilters(newFilters);
+    if (updateOnChange) {
+      // Trigger immediately on input
+      onApplyFilters?.(newFilters);
     }
-  }, [pathname])
+  };
 
-  const searchKey: SearchKey = useMemo(() => {
-    switch (true) {
-      case pathname.includes('collection'):
-        return 'collection'
-      case pathname.includes('collections'):
-        return 'collections'
-      case pathname.includes('users'):
-        return 'users'
-      case pathname.includes('items'):
-      default:
-        return 'nfts'
+  const handleApplyFilters = () => {
+    const { priceMax, priceMin, quoteToken } = localFilters;
+    if (
+      (priceMin !== "" && priceMin !== undefined) ||
+      (priceMax !== "" && priceMax !== undefined)
+    ) {
+      if (
+        (isNaN(Number(priceMin)) && !!priceMin) ||
+        (isNaN(Number(priceMax)) && !!priceMax)
+      ) {
+        return toast.error("Please input a valid number");
+      }
+
+      if (Number(priceMin) < 0 || Number(priceMax) < 0) {
+        return toast.error("Price cannot be negative");
+      }
+
+      if (Number(priceMin) > Number(priceMax) && priceMax?.trim() !== "") {
+        return toast.error("Minimum price cannot be greater than maximum one");
+      }
     }
-  }, [pathname])
+    onApplyFilters?.(
+      sanitizeObject({
+        ...localFilters,
+        quoteToken: quoteToken === undefined ? tokens.wu2u.address : quoteToken,
+      }),
+    );
+  };
 
-  const isFiltersVisible = useMemo(() => {
-    if (!routeKey) return false
-    return showFilters[routeKey]
-  }, [showFilters, routeKey])
+  const isTraitSelected = useCallback(
+    (key: string, value: string) => {
+      const traits = activeFilters.traits;
+      return traits?.some((t: Trait) => {
+        return t.trait_type === key && t.value === value;
+      });
+    },
+    [activeFilters],
+  );
 
-  const handleToggleFilters = () => {
-    if (!routeKey) return
-    toggleFilter(routeKey)
-  }
+  const handleSelectTrait = (
+    key: string,
+    value: any,
+    updateOnChange?: boolean,
+  ) => {
+    const selectedTraits = localFilters.traits ? [...localFilters.traits] : [];
+    const isExist = isTraitSelected(key, value);
 
-  const query = useMemo(() => queryString[searchKey], [queryString, searchKey])
-
-  return { isFiltersVisible, routeKey, handleToggleFilters, searchKey, query, setQueryString }
-}
-
-export const useNFTFilters = (defaultState?: APIParams.FetchNFTs) => {
-  const [activeFilters, setActiveFilters] = useState<APIParams.FetchNFTs>(defaultState ?? {
-    page: 1,
-    limit: 20,
-    traits: undefined,
-    collectionAddress: undefined,
-    creatorAddress: undefined,
-    priceMax: undefined,
-    priceMin: undefined,
-    sellStatus: undefined,
-    owner: undefined
-  })
-
-  const handleApplyFilters = (params: APIParams.FetchNFTs) => {
-    const _activeFilters = {
-      ...activeFilters,
-      ...params,
-      page: 1,
-      limit: 20
+    if (isExist) {
+      const index = selectedTraits.findIndex((t) => t.trait_type === key);
+      selectedTraits.splice(index, 1);
+    } else {
+      selectedTraits.push({
+        trait_type: key,
+        value,
+      });
     }
 
-    if (params.priceMax && !isNaN(Number(params.priceMax))) {
-      _activeFilters.priceMax = parseEther(params.priceMax.toString()).toString()
-    }
-    if (params.priceMin && !isNaN(Number(params.priceMin))) {
-      _activeFilters.priceMin = parseEther(params.priceMin.toString()).toString()
-    }
+    handleChange({ traits: selectedTraits, updateOnChange });
+  };
 
-    _activeFilters.sellStatus = (Number(params.priceMin) || Number(params.priceMax)) ? 'AskNew' : params.sellStatus
-
-    setActiveFilters(sanitizeObject(_activeFilters))
-  }
-
-  const handleChangePage = (page: number) => {
-    setActiveFilters({
-      ...activeFilters,
-      page
-    })
-    window.scrollTo(0, 0)
-  }
+  useEffect(() => {
+    setLocalFilters(activeFilters);
+  }, [activeFilters]);
 
   return {
-    activeFilters,
-    handleChangePage,
-    handleApplyFilters
-  }
-}
+    localFilters,
+    isTraitSelected,
+    handleChange,
+    handleApplyFilters,
+    handleSelectTrait,
+  };
+};
 
-export const useCollectionFilters = (defaultState?: APIParams.FetchCollections) => {
-  const [activeFilters, setActiveFilters] = useState<APIParams.FetchCollections>(defaultState ?? {
-    page: 1,
-    limit: 20,
-    max: '',
-    min: ''
-  })
+export const useCollectionFilters = (
+  activeFilters: APIParams.FetchCollections,
+  onApplyFilters?: (filters: APIParams.FetchCollections) => void,
+) => {
+  const [localFilters, setLocalFilters] =
+    useState<APIParams.FetchCollections>(activeFilters);
 
-  const handleChangePage = (page: number) => {
-    setActiveFilters({
-      ...activeFilters,
-      page
-    })
-    window.scrollTo(0, 0)
-  }
+  const handleApplyFilters = () => {
+    const { min, max } = localFilters;
+    if (
+      (min !== "" && min !== undefined) ||
+      (max !== "" && max !== undefined)
+    ) {
+      if ((isNaN(Number(min)) && !!min) || (isNaN(Number(max)) && !!max)) {
+        return toast.error("Please input a valid number");
+      }
 
-  const handleApplyFilters = (params: APIParams.FetchCollections) => {
-    const _activeFilters = sanitizeObject({
-      ...activeFilters,
-      ...params,
-      page: 1,
-      limit: 20
-    })
+      if (Number(min) < 0 || Number(max) < 0) {
+        return toast.error("Price cannot be negative");
+      }
 
-    if (params.max && !isNaN(Number(params.max))) {
-      _activeFilters.max = parseEther(params.max.toString()).toString()
-    }
-    if (params.min && !isNaN(Number(params.min))) {
-      _activeFilters.min = parseEther(params.min.toString()).toString()
+      if (Number(min) > Number(max) && max?.trim() !== "") {
+        return toast.error("Minimum price cannot be greater than maximum one");
+      }
     }
 
-    setActiveFilters(_activeFilters)
-  }
+    onApplyFilters?.(localFilters);
+  };
+
+  useEffect(() => {
+    setLocalFilters(activeFilters);
+  }, [activeFilters]);
 
   return {
-    activeFilters,
-    handleChangePage,
-    handleApplyFilters
-  }
-}
+    localFilters,
+    handleApplyFilters,
+    setLocalFilters,
+  };
+};

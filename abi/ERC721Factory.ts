@@ -1,272 +1,272 @@
 export default [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_beacon",
-        "type": "address"
+        internalType: "address",
+        name: "_beacon",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "_transferProxy",
-        "type": "address"
+        internalType: "address",
+        name: "_transferProxy",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "_lazyTransferProxy",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_lazyTransferProxy",
+        type: "address",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "proxy",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: "address",
+        name: "proxy",
+        type: "address",
+      },
     ],
-    "name": "Create721RaribleProxy",
-    "type": "event"
+    name: "Create721RaribleProxy",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "proxy",
-        "type": "address"
-      }
+        indexed: false,
+        internalType: "address",
+        name: "proxy",
+        type: "address",
+      },
     ],
-    "name": "Create721RaribleUserProxy",
-    "type": "event"
+    name: "Create721RaribleUserProxy",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
     ],
-    "name": "OwnershipTransferred",
-    "type": "event"
+    name: "OwnershipTransferred",
+    type: "event",
   },
   {
-    "inputs": [],
-    "name": "beacon",
-    "outputs": [
+    inputs: [],
+    name: "beacon",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    stateMutability: "view",
+    type: "function",
+    constant: true,
   },
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
+    inputs: [],
+    name: "owner",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    stateMutability: "view",
+    type: "function",
+    constant: true,
   },
   {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
     ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        internalType: "string",
+        name: "_name",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
+        internalType: "string",
+        name: "_symbol",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "baseURI",
-        "type": "string"
+        internalType: "string",
+        name: "baseURI",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "contractURI",
-        "type": "string"
+        internalType: "string",
+        name: "contractURI",
+        type: "string",
       },
       {
-        "internalType": "address[]",
-        "name": "operators",
-        "type": "address[]"
+        internalType: "address[]",
+        name: "operators",
+        type: "address[]",
       },
       {
-        "internalType": "uint256",
-        "name": "salt",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "salt",
+        type: "uint256",
+      },
     ],
-    "name": "createToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "createToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        internalType: "string",
+        name: "_name",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
+        internalType: "string",
+        name: "_symbol",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "baseURI",
-        "type": "string"
+        internalType: "string",
+        name: "baseURI",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "contractURI",
-        "type": "string"
+        internalType: "string",
+        name: "contractURI",
+        type: "string",
       },
       {
-        "internalType": "uint256",
-        "name": "salt",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "salt",
+        type: "uint256",
+      },
     ],
-    "name": "createToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "createToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        internalType: "string",
+        name: "_name",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
+        internalType: "string",
+        name: "_symbol",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "baseURI",
-        "type": "string"
+        internalType: "string",
+        name: "baseURI",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "contractURI",
-        "type": "string"
+        internalType: "string",
+        name: "contractURI",
+        type: "string",
       },
       {
-        "internalType": "address[]",
-        "name": "operators",
-        "type": "address[]"
+        internalType: "address[]",
+        name: "operators",
+        type: "address[]",
       },
       {
-        "internalType": "uint256",
-        "name": "_salt",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_salt",
+        type: "uint256",
+      },
     ],
-    "name": "getAddress",
-    "outputs": [
+    name: "getAddress",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    stateMutability: "view",
+    type: "function",
+    constant: true,
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
+        internalType: "string",
+        name: "_name",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
+        internalType: "string",
+        name: "_symbol",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "baseURI",
-        "type": "string"
+        internalType: "string",
+        name: "baseURI",
+        type: "string",
       },
       {
-        "internalType": "string",
-        "name": "contractURI",
-        "type": "string"
+        internalType: "string",
+        name: "contractURI",
+        type: "string",
       },
       {
-        "internalType": "uint256",
-        "name": "_salt",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_salt",
+        type: "uint256",
+      },
     ],
-    "name": "getAddress",
-    "outputs": [
+    name: "getAddress",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  }
-] as const
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+] as const;

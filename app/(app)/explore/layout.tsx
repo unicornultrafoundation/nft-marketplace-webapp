@@ -1,25 +1,27 @@
-'use client'
+"use client";
 
-import { useMemo } from 'react'
-import { usePathname } from 'next/navigation'
-import Text from '@/components/Text'
-import ExploreSectionNavbar from '@/components/Layout/ExploreNavbar'
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
+import Text from "@/components/Text";
+import ExploreSectionNavbar from "@/components/Layout/ExploreNavbar";
 
-export default function ExploreLayout({ children }: {
-  children: React.ReactNode
+export default function ExploreLayout({
+  children,
+}: {
+  children: React.ReactNode;
 }) {
-  const pathname = usePathname()
+  const pathname = usePathname();
   const title = useMemo(() => {
     switch (true) {
-      case pathname.includes('collections'):
-        return 'Explore Collections'
-      case pathname.includes('items'):
-        return 'Explore NFTs'
-      case pathname.includes('users'):
-        return 'Explore Users'
+      case pathname.includes("collections"):
+        return "Explore Collections";
+      case pathname.includes("items"):
+        return "Explore NFTs";
+      case pathname.includes("users"):
+        return "Explore Users";
     }
-  }, [pathname])
-  const caption = 'Discover and collect crypto art'
+  }, [pathname]);
+  const caption = "Discover and collect crypto art";
 
   return (
     <div className="flex flex-col px-4 tablet:px-10 desktop:px-20">
@@ -34,9 +36,7 @@ export default function ExploreLayout({ children }: {
         <ExploreSectionNavbar />
       </div>
 
-      <div>
-        {children}
-      </div>
+      <div>{children}</div>
     </div>
-  )
+  );
 }

@@ -1,9 +1,13 @@
 import React from "react";
-import { IconProps } from '@/components/Icon/index'
-import { classNames } from '@/utils/string'
+import { IconProps } from "@/components/Icon/index";
+import { classNames } from "@/utils/string";
 
-export default function ShoppingBagIcon({ color, className, width, height }: IconProps) {
-
+export default function ShoppingBagIcon({
+  color,
+  className,
+  width,
+  height,
+}: IconProps) {
   return (
     <svg
       className={classNames(`text-${color}`, className)}
@@ -11,22 +15,26 @@ export default function ShoppingBagIcon({ color, className, width, height }: Ico
       height={height}
       viewBox="0 0 20 20"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M4.33317 1.16683C4.49055 0.956991 4.73754 0.833496 4.99984 0.833496H14.9998C15.2621 0.833496 15.5091 0.956991 15.6665 1.16683L18.1665 4.50016C18.2747 4.64441 18.3332 4.81985 18.3332 5.00016V16.6668C18.3332 17.3299 18.0698 17.9658 17.6009 18.4346C17.1321 18.9034 16.4962 19.1668 15.8332 19.1668H4.1665C3.50346 19.1668 2.86758 18.9034 2.39874 18.4346C1.9299 17.9658 1.6665 17.3299 1.6665 16.6668V5.00016C1.6665 4.81985 1.72499 4.64441 1.83317 4.50016L4.33317 1.16683ZM5.4165 2.50016L3.33317 5.27794V16.6668C3.33317 16.8878 3.42097 17.0998 3.57725 17.2561C3.73353 17.4124 3.94549 17.5002 4.1665 17.5002H15.8332C16.0542 17.5002 16.2661 17.4124 16.4224 17.2561C16.5787 17.0998 16.6665 16.8878 16.6665 16.6668V5.27794L14.5832 2.50016H5.4165Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M1.6665 4.99984C1.6665 4.5396 2.0396 4.1665 2.49984 4.1665H17.4998C17.9601 4.1665 18.3332 4.5396 18.3332 4.99984C18.3332 5.46007 17.9601 5.83317 17.4998 5.83317H2.49984C2.0396 5.83317 1.6665 5.46007 1.6665 4.99984Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M6.66683 7.5C7.12707 7.5 7.50016 7.8731 7.50016 8.33333C7.50016 8.99637 7.76355 9.63226 8.2324 10.1011C8.70124 10.5699 9.33712 10.8333 10.0002 10.8333C10.6632 10.8333 11.2991 10.5699 11.7679 10.1011C12.2368 9.63226 12.5002 8.99637 12.5002 8.33333C12.5002 7.8731 12.8733 7.5 13.3335 7.5C13.7937 7.5 14.1668 7.8731 14.1668 8.33333C14.1668 9.4384 13.7278 10.4982 12.9464 11.2796C12.165 12.061 11.1052 12.5 10.0002 12.5C8.89509 12.5 7.83529 12.061 7.05388 11.2796C6.27248 10.4982 5.8335 9.4384 5.8335 8.33333C5.8335 7.8731 6.20659 7.5 6.66683 7.5Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
     </svg>
-  )
-};
+  );
+}

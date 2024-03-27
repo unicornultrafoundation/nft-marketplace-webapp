@@ -1,336 +1,336 @@
 export default [
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
     ],
-    "name": "OwnershipTransferred",
-    "type": "event"
+    name: "OwnershipTransferred",
+    type: "event",
   },
   {
-    "inputs": [],
-    "name": "MAX_FEE",
-    "outputs": [
+    inputs: [],
+    name: "MAX_FEE",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
       },
       {
-        "internalType": "address",
-        "name": "nft",
-        "type": "address"
+        internalType: "address",
+        name: "nft",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
     ],
-    "name": "calculateFee",
-    "outputs": [
+    name: "calculateFee",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "nft",
-        "type": "address"
+        internalType: "address",
+        name: "nft",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "quoteToken",
-        "type": "address"
+        internalType: "address",
+        name: "quoteToken",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
     ],
-    "name": "distributeFees",
-    "outputs": [
+    name: "distributeFees",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "feeRatioSellerBuyer",
-    "outputs": [
+    inputs: [],
+    name: "feeRatioSellerBuyer",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_marketplaceERC721",
-        "type": "address"
+        internalType: "address",
+        name: "_marketplaceERC721",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "_marketplaceERC1155",
-        "type": "address"
+        internalType: "address",
+        name: "_marketplaceERC1155",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "_royaltiesRegistry",
-        "type": "address"
+        internalType: "address",
+        name: "_royaltiesRegistry",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "_recipient",
-        "type": "address"
+        internalType: "address",
+        name: "_recipient",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "_feePercent",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "_feePercent",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "_feeRatioSellerBuyer",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_feeRatioSellerBuyer",
+        type: "uint256",
+      },
     ],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "initialize",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "marketplaceERC1155",
-    "outputs": [
+    inputs: [],
+    name: "marketplaceERC1155",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "marketplaceERC721",
-    "outputs": [
+    inputs: [],
+    name: "marketplaceERC721",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
+    inputs: [],
+    name: "owner",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "protocolFeePercent",
-    "outputs": [
+    inputs: [],
+    name: "protocolFeePercent",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "protocolFeeRecipient",
-    "outputs": [
+    inputs: [],
+    name: "protocolFeeRecipient",
+    outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "royaltiesRegistry",
-    "outputs": [
+    inputs: [],
+    name: "royaltiesRegistry",
+    outputs: [
       {
-        "internalType": "contract IRoyaltiesRegistry",
-        "name": "",
-        "type": "address"
-      }
+        internalType: "contract IRoyaltiesRegistry",
+        name: "",
+        type: "address",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "ratio",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "ratio",
+        type: "uint256",
+      },
     ],
-    "name": "setFeeRatio",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setFeeRatio",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "newMarketplace",
-        "type": "address"
+        internalType: "address",
+        name: "newMarketplace",
+        type: "address",
       },
       {
-        "internalType": "bool",
-        "name": "marketplaceType",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "marketplaceType",
+        type: "bool",
+      },
     ],
-    "name": "setMarketplaceERC721",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setMarketplaceERC721",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "uint256",
-        "name": "_percent",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "_percent",
+        type: "uint256",
+      },
     ],
-    "name": "setProtocolFeePercent",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setProtocolFeePercent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_recipient",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_recipient",
+        type: "address",
+      },
     ],
-    "name": "setProtocolFeeRecipient",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setProtocolFeeRecipient",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "newRegistry",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "newRegistry",
+        type: "address",
+      },
     ],
-    "name": "setRoyaltiesRegistry",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    name: "setRoyaltiesRegistry",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
     ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-] as const
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+] as const;

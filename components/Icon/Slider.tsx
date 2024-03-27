@@ -1,7 +1,12 @@
-import { classNames } from '@/utils/string'
-import { IconProps } from './index'
+import { classNames } from "@/utils/string";
+import { IconProps } from "./index";
 
-export default function SliderIcon({ color, className, width, height }: IconProps) {
+export default function SliderIcon({
+  color,
+  className,
+  width,
+  height,
+}: IconProps) {
   return (
     <svg
       className={classNames(className, `text-${color}`)}
@@ -9,53 +14,62 @@ export default function SliderIcon({ color, className, width, height }: IconProp
       height={height}
       viewBox="0 0 14 14"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M2.33333 7.58317C2.6555 7.58317 2.91667 7.84434 2.91667 8.1665V12.2498C2.91667 12.572 2.6555 12.8332 2.33333 12.8332C2.01117 12.8332 1.75 12.572 1.75 12.2498V8.1665C1.75 7.84434 2.01117 7.58317 2.33333 7.58317Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M2.33333 1.1665C2.6555 1.1665 2.91667 1.42767 2.91667 1.74984V5.83317C2.91667 6.15534 2.6555 6.4165 2.33333 6.4165C2.01117 6.4165 1.75 6.15534 1.75 5.83317V1.74984C1.75 1.42767 2.01117 1.1665 2.33333 1.1665Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M7 6.4165C7.32217 6.4165 7.58333 6.67767 7.58333 6.99984V12.2498C7.58333 12.572 7.32217 12.8332 7 12.8332C6.67783 12.8332 6.41667 12.572 6.41667 12.2498V6.99984C6.41667 6.67767 6.67783 6.4165 7 6.4165Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M7 1.1665C7.32217 1.1665 7.58333 1.42767 7.58333 1.74984V4.6665C7.58333 4.98867 7.32217 5.24984 7 5.24984C6.67783 5.24984 6.41667 4.98867 6.41667 4.6665V1.74984C6.41667 1.42767 6.67783 1.1665 7 1.1665Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M11.6667 8.74984C11.9888 8.74984 12.25 9.011 12.25 9.33317V12.2498C12.25 12.572 11.9888 12.8332 11.6667 12.8332C11.3445 12.8332 11.0833 12.572 11.0833 12.2498V9.33317C11.0833 9.011 11.3445 8.74984 11.6667 8.74984Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M11.6667 1.1665C11.9888 1.1665 12.25 1.42767 12.25 1.74984V6.99984C12.25 7.322 11.9888 7.58317 11.6667 7.58317C11.3445 7.58317 11.0833 7.322 11.0833 6.99984V1.74984C11.0833 1.42767 11.3445 1.1665 11.6667 1.1665Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M0 8.1665C0 7.84434 0.261167 7.58317 0.583333 7.58317H4.08333C4.4055 7.58317 4.66667 7.84434 4.66667 8.1665C4.66667 8.48867 4.4055 8.74984 4.08333 8.74984H0.583333C0.261167 8.74984 0 8.48867 0 8.1665Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M4.66667 4.6665C4.66667 4.34434 4.92783 4.08317 5.25 4.08317H8.75C9.07217 4.08317 9.33333 4.34434 9.33333 4.6665C9.33333 4.98867 9.07217 5.24984 8.75 5.24984H5.25C4.92783 5.24984 4.66667 4.98867 4.66667 4.6665Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M9.33333 9.33317C9.33333 9.011 9.5945 8.74984 9.91667 8.74984H13.4167C13.7388 8.74984 14 9.011 14 9.33317C14 9.65534 13.7388 9.9165 13.4167 9.9165H9.91667C9.5945 9.9165 9.33333 9.65534 9.33333 9.33317Z"
-        fill="currentColor" />
+        fill="currentColor"
+      />
     </svg>
-
-  )
+  );
 }

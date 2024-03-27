@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'SFPro';
-  src: url('/fonts/SF-Pro-Display-Regular.otf');
+  font-family: "SFPro";
+  src: url("/fonts/SF-Pro-Display-Regular.otf");
 }
 
 /* In your css file where you want to use the font */
 body {
-  font-family: 'SFPro', 'system-ui', 'Arial';
+  font-family: "SFPro", "system-ui", "Arial";
 }

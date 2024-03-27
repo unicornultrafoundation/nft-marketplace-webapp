@@ -1,71 +1,77 @@
-import Button, { ButtonProps } from './index'
-import { useMemo, useState } from 'react'
-import SignupModal from '@/components/Modal/SignupModal'
-import WalletConnectModal from '@/components/Modal/WalletConnectModal'
-import { useAccount } from 'wagmi'
-import SignConnectMessageModal from '@/components/Modal/SignConnectMessageModal'
-import useAuthStore from '@/store/auth/store'
-import { useRouter } from 'next/navigation'
+import { useMemo, useState } from "react";
+import SignupModal from "@/components/Modal/SignupModal";
+import WalletConnectModal from "@/components/Modal/WalletConnectModal";
+import { useAccount } from "wagmi";
+import SignConnectMessageModal from "@/components/Modal/SignConnectMessageModal";
+import useAuthStore from "@/store/auth/store";
+import Button from "@/components/Button/index";
+import { useAuth } from "@/hooks/useAuth";
 
-interface Props extends ButtonProps {
-  children?: React.ReactNode
-  mode?: 'link' | 'modal'
+interface Props {
+  className?: string;
+  children?: React.ReactNode;
+  action?: (accessToken?: string) => void;
+  showConnectButton?: boolean;
 }
 
-export default function ConnectWalletButton({ className, mode = 'modal', children, ...rest }: Props) {
-  const router = useRouter()
-  const { isConnected, address } = useAccount()
-  const [showWalletConnect, setShowWalletConnect] = useState(false)
-  const [showSignMessage, setShowSignMessage] = useState(false)
-  const [showSignup, setShowSignup] = useState(false)
-  const acceptedTerms = useAuthStore(state => state.profile?.acceptedTerms)
-  const accessToken = useAuthStore(state => state.credentials?.accessToken)
-  const expiredDate = useAuthStore(state => state.credentials?.accessTokenExpire)
-  const userWallet = useAuthStore(state => state.profile?.publicKey)
-  const isCorrectWallet = useMemo(() => {
-    if (!userWallet || !address) return false
-    return userWallet.toLowerCase() === address.toLowerCase()
-  }, [userWallet, address, isConnected])
-  const isExpired = useMemo(() => {
-    return !!expiredDate && expiredDate < Date.now()
-  }, [expiredDate])
+export default function ConnectWalletButton({
+  action,
+  className,
+  showConnectButton,
+  children,
+}: Props) {
+  const [showWalletConnect, setShowWalletConnect] = useState(false);
+  const [showSignMessage, setShowSignMessage] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
+  const { isValidSession } = useAuth();
 
   const handleConnectWallet = () => {
-    if (mode === 'modal') {
-      setShowWalletConnect(true)
-    } else {
-      router.push('/connect')
+    if (typeof localStorage !== "undefined") {
+      if (!isValidSession) {
+        localStorage.removeItem("auth-storage");
+        setShowWalletConnect(true);
+      } else {
+        // Access Token has been saved in auth store
+        action?.();
+      }
     }
-  }
-
-  // if ((isConnected || mode === 'link') && acceptedTerms && !!accessToken && !isExpired && isCorrectWallet) {
-  //   return children
-  // }
+  };
 
   return (
     <>
-      {(isConnected || mode === 'link') && acceptedTerms && !!accessToken && !isExpired && isCorrectWallet ? children : (
-        <>
-          <Button type="button" onClick={handleConnectWallet} className={className} {...rest}>
+      <div className={className} onClick={handleConnectWallet}>
+        {showConnectButton && !isValidSession ? (
+          <Button
+            type="button"
+            className="w-full"
+            onClick={handleConnectWallet}
+          >
             Connect Wallet
           </Button>
+        ) : (
+          children
+        )}
+      </div>
 
-          <WalletConnectModal
-            show={showWalletConnect}
-            onSignMessage={() => setShowSignMessage(true)}
-            onClose={() => setShowWalletConnect(false)} />
+      <WalletConnectModal
+        show={showWalletConnect}
+        onSignMessage={() => setShowSignMessage(true)}
+        onClose={() => setShowWalletConnect(false)}
+      />
 
-          <SignConnectMessageModal
-            mode={mode}
-            show={showSignMessage}
-            onSignup={() => setShowSignup(true)}
-            onClose={() => setShowSignMessage(false)} />
+      <SignConnectMessageModal
+        show={showSignMessage}
+        onConnectSuccess={(accessToken) => action?.(accessToken)}
+        onSignup={() => setShowSignup(true)}
+        onClose={() => setShowSignMessage(false)}
+      />
 
-          <SignupModal
-            show={showSignup}
-            onClose={() => setShowSignup(false)} />
-        </>
-      )}
+      <SignupModal
+        show={showSignup}
+        onClose={() => setShowSignup(false)}
+        onSignupSuccess={(accessToken) => action?.(accessToken)}
+      />
     </>
-  )
+  );
 }

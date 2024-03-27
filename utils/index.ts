@@ -1,26 +1,53 @@
-export const sleep = (millisecond: number) => new Promise((resolve) => setTimeout(resolve, millisecond))
+import { Round } from "@/types";
+import { abis } from "@/abi";
+
+export const sleep = (millisecond: number) =>
+  new Promise((resolve) => setTimeout(resolve, millisecond));
 
 export const sanitizeObject = (obj: Record<string, any>) => {
-  const _obj = { ...obj }
+  const _obj = { ...obj };
   Object.entries(_obj).forEach(([key, value]) => {
-    if (!value) delete _obj[key]
-  })
+    if (
+      value === undefined ||
+      value === null ||
+      value === false ||
+      value === ""
+    )
+      delete _obj[key];
+  });
 
-  return _obj
-}
+  return _obj;
+};
 
-export const parseQueries = (queries: Record<string, any>) => {
-  return '?' + Object.entries(queries)
-    .filter(([_, value]) => {
-      if (Array.isArray(value)) {
-        return value.length > 0
-      }
-      return value !== null && value !== undefined && value !== '';
-    })
-    .map(([key, value]) => `${key}=${value}`).join("&")
-}
+export const parseQueries = (queries?: Record<string, any> | undefined) => {
+  if (!queries) {
+    return "";
+  }
+  return (
+    "?" +
+    Object.entries(queries)
+      .filter(([_, value]) => {
+        if (Array.isArray(value)) {
+          return value.length > 0;
+        }
+        return value !== null && value !== undefined && value !== "";
+      })
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&")
+  );
+};
 
-export const formatDisplayedBalance = (value: string | number, digits = 2) => {
-  if (!value) return '0'
-  return Number(value).toLocaleString('en-us')
-}
+export const getRoundAbi = (round: Round) => {
+  const { type: roundType } = round;
+  return abis[roundType];
+};
+
+export const formatDisplayedNumber = (value: string | number) => {
+  if (!value) return "0";
+  const usFormatter = Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
+  });
+
+  return usFormatter.format(Number(value));
+};

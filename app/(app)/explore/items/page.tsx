@@ -1,36 +1,34 @@
-'use client'
+"use client";
 
-import { useMarketplaceApi } from '@/hooks/useMarketplaceApi'
-import useSWR from 'swr'
-import { useExploreSectionFilters, useNFTFilters } from '@/hooks/useFilters'
-import NFTsList from '@/components/List/NFTsList'
-import { APIParams } from '@/services/api/types'
-import { sanitizeObject } from '@/utils'
-import { useUIStore } from '@/store/ui/store'
+import NFTsList from "@/components/List/NFTsList";
+import { useNFTFilterStore } from "@/store/filters/items/store";
+import { useFetchNFTList, useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
 export default function ExploreNFTsPage() {
-  const api = useMarketplaceApi()
-  const { isFiltersVisible, handleToggleFilters } = useExploreSectionFilters()
-  const { activeFilters, handleApplyFilters, handleChangePage } = useNFTFilters()
+  const { showFilters, toggleFilter, filters, updateFilters, resetFilters } =
+    useNFTFilterStore();
 
-  const { queryString } = useUIStore(state => state)
-  const { searchKey } = useExploreSectionFilters()
+  const { error, isLoading, setSize, size, data } = useFetchNFTList(filters);
 
-  const { data, isLoading } = useSWR(
-    { ...activeFilters, name: queryString[searchKey] },
-    (params) => api.fetchNFTs(sanitizeObject(params) as APIParams.FetchNFTs),
-    { refreshInterval: 5000 }
-  )
+  const { isLoadingMore, list: items } = useInfiniteScroll({
+    data,
+    loading: isLoading,
+    page: size,
+    onNext: () => setSize(size + 1),
+  });
 
   return (
     <NFTsList
-      loading={isLoading}
-      onApplyFilters={handleApplyFilters}
-      onChangePage={handleChangePage}
-      showFilters={isFiltersVisible}
-      items={data?.data}
-      paging={data?.paging}
-      onClose={handleToggleFilters}
+      onClose={() => toggleFilter(false)}
+      isLoading={isLoading}
+      isLoadMore={isLoadingMore}
+      activeFilters={filters}
+      onApplyFilters={updateFilters}
+      onResetFilters={resetFilters}
+      showFilters={showFilters}
+      items={items.concatenatedData}
+      currentHasNext={items.currentHasNext}
+      error={error}
     />
-  )
+  );
 }

@@ -1,120 +1,123 @@
-import { Modal, ModalProps, Tooltip } from 'flowbite-react'
-import { useCancelSellNFT } from '@/hooks/useMarket'
-import Text from '@/components/Text'
-import Button from '@/components/Button'
-import { useEffect, useMemo, useState } from 'react'
-import useAuthStore from '@/store/auth/store'
-import { NFT } from '@/types/entitites'
-import { APIResponse } from '@/services/api/types'
-import NFTMarketData = APIResponse.NFTMarketData
+import {
+  CustomFlowbiteTheme,
+  Modal,
+  ModalProps,
+  Tooltip,
+} from "flowbite-react";
+import { useCancelSellNFT } from "@/hooks/useMarket";
+import Text from "@/components/Text";
+import Button from "@/components/Button";
+import { useEffect, useMemo, useState } from "react";
+import useAuthStore from "@/store/auth/store";
+import { NFT } from "@/types/entitites";
+import { APIResponse } from "@/services/api/types";
+import NFTMarketData = APIResponse.NFTMarketData;
+import { toast } from "react-toastify";
+import { useCancelSellURC1155, useCancelSellURC721 } from "@/hooks/useSellNFT";
 
 interface Props extends ModalProps {
-  nft: NFT,
-  marketData?: NFTMarketData
+  nft: NFT;
+  marketData?: NFTMarketData;
 }
 
-export default function CancelSellNFTModal({ nft, show, onClose, marketData }: Props) {
-  const [step, setStep] = useState(1)
-  const { onCancelSell, isLoading, error, isSuccess } = useCancelSellNFT(nft)
-  const wallet = useAuthStore(state => state.
-    profile?.publicKey)
+const modalTheme: CustomFlowbiteTheme["modal"] = {
+  content: {
+    inner:
+      "relative rounded-lg bg-white shadow flex flex-col h-auto max-h-[600px] desktop:max-h-[800px] tablet:max-h-[800px]",
+    base: "relative w-full desktop:p-10 tablet:p-6 p-4 ",
+  },
+  body: {
+    base: "p-0 flex-1 overflow-auto",
+  },
+};
+
+export default function CancelSellNFTModal({
+  nft,
+  show,
+  onClose,
+  marketData,
+}: Props) {
+  const wallet = useAuthStore((state) => state.profile?.publicKey);
+  const [loading, setLoading] = useState(false);
+  const onCancelSellURC721 = useCancelSellURC721(nft);
+  const onCancelSellURC1155 = useCancelSellURC1155();
   const mySale = useMemo(() => {
-    return marketData?.sellInfo?.find(item => item.from?.signer?.toLowerCase() === wallet?.toLowerCase())
-  }, [marketData, wallet])
+    return marketData?.sellInfo?.find(
+      (item) => item.from?.signer?.toLowerCase() === wallet?.toLowerCase(),
+    );
+  }, [marketData, wallet]);
 
-  const handleCancelSell = () => {
+  const handleCancelSell = async () => {
+    const toastId = toast.loading("Preparing data...", { type: "info" });
+    setLoading(true);
     try {
-      onCancelSell(mySale?.operationId)
+      if (nft.collection.type === "ERC721") {
+        await onCancelSellURC721();
+      } else {
+        await onCancelSellURC1155(mySale?.operationId || "");
+      }
+      toast.update(toastId, {
+        render: "Sale cancelled successfully",
+        type: "success",
+        autoClose: 1000,
+        closeButton: true,
+        isLoading: false,
+      });
+      onClose?.();
     } catch (e) {
-      console.error(e)
+      console.error(e);
+      toast.update(toastId, {
+        render: "Sale cancelled failed",
+        type: "error",
+        autoClose: 1000,
+        closeButton: true,
+        isLoading: false,
+      });
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
-  const handleReset = () => {
-    onClose?.()
-    setStep(1)
-  }
-
-  const renderContent = () => {
-    switch (step) {
-      case 3: // Error
-        return (
-          <>
-            <Text className="font-semibold text-error text-center text-heading-sm">
-              Error report
-            </Text>
-            <Tooltip content={error?.message} placement="bottom">
-              <Text className="max-w-full text-secondary text-center text-ellipsis" variant="body-18">
-                {error?.message}
+  return (
+    <Modal
+      theme={modalTheme}
+      dismissible
+      size="lg"
+      show={show}
+      onClose={onClose}
+    >
+      <Modal.Body className="p-10">
+        <div className="flex flex-col justify-center gap-4 items-center">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="font-bold">
+              <Text className="mb-3 text-center" variant="heading-xs">
+                Cancel listing
               </Text>
-            </Tooltip>
-
-            <Button className="w-full" variant="secondary" onClick={onClose}>
-              Close
-            </Button>
-          </>
-        )
-      case 2: // Success
-        return (
-          <>
-            <Text className="font-semibold text-success text-center text-heading-sm">
-              Success
-            </Text>
-            <Tooltip content="Sale has been cancelled" placement="bottom">
-              <Text className="max-w-full text-secondary text-center text-ellipsis" variant="body-18">
-                Sale has been cancelled
+              <Text className="text-secondary" variant="body-16">
+                Cancel sale for{" "}
+                <span className="text-primary font-bold">{nft.name}</span> from{" "}
+                <span className="text-primary font-bold">
+                  {nft.collection.name}
+                </span>{" "}
+                collection
               </Text>
-            </Tooltip>
+            </div>
 
-            <Button className="w-full" variant="secondary" onClick={handleReset}>
-              Close and continue
-            </Button>
-          </>
-        )
-      case 1:
-      default:
-        return (
-          <div className='flex flex-col items-center justify-center gap-4'>
-            <Text className="font-semibold text-primary text-center" variant="heading-xs">
-              {nft.collection.name} - {nft.name}
-            </Text>
-            <Text className="text-secondary text-center" variant="body-18">
-              Are you sure to cancel listing?
-            </Text>
-
-            <div className="flex gap-4">
-              <Button variant="secondary" onClick={handleReset}>
-                No
+            <div className="w-full flex gap-4">
+              <Button className="flex-1" variant="secondary" onClick={onClose}>
+                Close
               </Button>
-              <Button onClick={handleCancelSell} loading={isLoading}>
+              <Button
+                className="flex-1"
+                onClick={handleCancelSell}
+                loading={loading}
+              >
                 Yes
               </Button>
             </div>
           </div>
-        )
-    }
-  }
-
-  useEffect(() => {
-    if (error) {
-      setStep(3)
-    }
-    if (isSuccess) {
-      setStep(2)
-    }
-  }, [error, isSuccess])
-
-  return (
-    <Modal
-      dismissible
-      size="md"
-      show={show}
-      onClose={onClose}>
-      <Modal.Body className="p-10">
-        <div className="flex flex-col justify-center gap-4 items-center">
-          {renderContent()}
         </div>
       </Modal.Body>
     </Modal>
-  )
+  );
 }
